@@ -67,7 +67,10 @@ void loop()
 
   // follow tape
   int error = sensor_array.calculateError();
-
+  // int g = map(analogRead(POT), 0, 1023, 0, 150);
+  // pid.Kp = g;
+  // display.println(pid.Kp);
+  // display.println(" ");
   display.println(sensor_array.LFSensor[0]);
   display.println(sensor_array.LFSensor[1]);
   display.println(sensor_array.LFSensor[2]);
@@ -98,12 +101,12 @@ void loop()
 
 
       //drive straight and close
-      encoders.drive(50, 50);
+      encoders.drive(55, 55);
 
       closeGate();
 
       //pivot left
-      encoders.backup(50, 50);
+      encoders.backup(55, 55);
       pivot(LEFT);
 
       //deposit
@@ -118,19 +121,24 @@ void loop()
 void motorPIDcontrol()
 {
   int gain = pid.speed;
-  int slow_down = pid.slow_down;
+ // int slow_down = pid.slow_down;
 
   if (gain > 0)
   {
     pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + gain, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-    pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED - slow_down, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    // pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED - slow_down, RESOLUTION_10B_COMPARE_FORMAT);
+    // pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   }
   else
   {
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + slow_down, RESOLUTION_10B_COMPARE_FORMAT);
+    // pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + slow_down, RESOLUTION_10B_COMPARE_FORMAT);
+    // pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
     pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED - gain, RESOLUTION_10B_COMPARE_FORMAT);
