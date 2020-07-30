@@ -112,6 +112,7 @@ void loop()
       //deposit
 
       depositCans();
+      delay(1000);
       
   }
 
@@ -193,13 +194,13 @@ void pivot(int direction)
 
     display.display();
 
-    if ((sensor_array.digitalArr[0] == 1 || sensor_array.digitalArr[1] == 1) && direction == LEFT)
+    if (sensor_array.anyFrontSensorOn() && direction == LEFT)
     {
       motorStop();
       delay(200);
       break;
     }
-    else if ((sensor_array.digitalArr[4] == 1 || sensor_array.digitalArr[3]) && direction == RIGHT)
+    else if (sensor_array.anyFrontSensorOn() && direction == RIGHT)
     {
       motorStop();
       delay(200);

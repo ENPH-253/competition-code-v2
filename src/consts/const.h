@@ -44,8 +44,10 @@
 #define TCRT_DIGITAL PB10
 
 #define KP 14
-// #define THRESHOLD 725
-#define THRESHOLD 710
+#define THRESHOLD 450
+
+//bot 3
+// #define THRESHOLD 710
 #define BASE_SPEED 920
 
 #define MOTOR_FREQ 2000

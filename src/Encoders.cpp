@@ -8,6 +8,8 @@
 #define MOTOR_L_CCW PB_9
 
 #define PWMFREQ 2000
+#define FWD_SPEED 950
+#define BACK_SPEED 950
 
 Encoders::Encoders(SensorArray sensor_arr) {
     countL = 0;
@@ -32,8 +34,8 @@ void Encoders::drive(int leftStop, int rightStop) {
   delay(100);
 
   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_R_F, MOTOR_FREQ, 900, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_L_F, MOTOR_FREQ, 900, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, FWD_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, FWD_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
   bool rightDone = false;
@@ -117,10 +119,10 @@ void Encoders::backup(int leftStop, int rightStop) {
   countL = 0;
   countR = 0;
 
-  pwm_start(MOTOR_R_B, MOTOR_FREQ, 850, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_B, MOTOR_FREQ, BACK_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_L_B, MOTOR_FREQ, 850, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_B, MOTOR_FREQ, BACK_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
 
   bool rightDone = false;
   bool leftDone = false;
