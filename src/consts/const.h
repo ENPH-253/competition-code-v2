@@ -43,10 +43,10 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 150 
+#define KP 60
 // #define THRESHOLD 725
 #define THRESHOLD 450
-#define BASE_SPEED 750 
+#define BASE_SPEED 820
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50

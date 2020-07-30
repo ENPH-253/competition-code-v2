@@ -35,7 +35,7 @@ void Sonar_Logic::goGetEm(){
     while(!pickedUp){
     if (pollSonar() < SONAR_LIMIT - count * STRAIGHT_LENGTH)
     {
-        encoder->driveStraight_Sonar(0);
+        // encoder->driveStraight_Sonar(0);
         // stopMotors();
 
         delay(500);
@@ -184,7 +184,7 @@ void Sonar_Logic::approachCan()
   
   delay(1500);
 
-  encoder->driveStraight_Sonar(1);
+  // encoder->driveStraight_Sonar(1);
 
   stopMotors();
 

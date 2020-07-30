@@ -3,11 +3,7 @@
 
 Pid::Pid(int kp) {
     Kp = kp;
-    Kd = 100; 
-    // p = P;
-    // d = 0;
-    // error = 0;
-    // previousError = 0;
+    Kd =  100; 
     slow_ratio = 0.5;
     gain_ratio = 0.5;
 }
