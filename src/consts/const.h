@@ -49,7 +49,7 @@
 
 
 #define THRESHOLD 725
-#define BASE_SPEED 850
+#define BASE_SPEED 925
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -90,7 +90,7 @@
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
-#define PIVOT_SPEED 900
+#define PIVOT_SPEED 920
 
 #define LEFT 0
 #define RIGHT 1
