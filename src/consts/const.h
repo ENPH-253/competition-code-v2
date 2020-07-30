@@ -87,10 +87,12 @@
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
-#define PIVOT_SPEED 775
+#define PIVOT_SPEED 850 
 
 #define LEFT 0
 #define RIGHT 1
+
+#define MAX_TURNS 7
 
 // 126.76
 // 76.77

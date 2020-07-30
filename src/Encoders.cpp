@@ -47,7 +47,7 @@ void Encoders::drive(int leftStop, int rightStop) {
       rightDone = true;
     }
 
-    if (countL > leftStop && !leftDone) 
+    if (countL > leftStop && !leftDone) {
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       leftDone = true;
@@ -144,9 +144,9 @@ void Encoders::backup(int leftStop, int rightStop) {
 }
 
 void Encoders::rightPivot() {
-  turnR(0, 30);
+  turnR(0, 23);
 }
 
 void Encoders::adjustmentBackup() {
-  backup(17, 17);
+  backup(14, 14);
 }
