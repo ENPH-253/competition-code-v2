@@ -49,7 +49,7 @@ void setup()
 
 
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
 
     delay(1000);
 }
@@ -59,198 +59,31 @@ void loop()
   display.clearDisplay();
   display.setCursor(0, 0);
 
-  while(true){
-    pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
-
-    delay(4000);
-
-    pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_UP_R, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_UP_L, RESOLUTION_10B_COMPARE_FORMAT);
-
-    delay(4000);
-  }
-
-
-  // for testing backup and pivot
-
-  // while (true) {
-  //   encoders.rightTurn90();
-  //   delay(2000);
-  // }
-  // encoders.turnAroundContinuous();
-  // encoders.driveStraightContinuous();
-
-  // while (true) {
-  //   encoders.driveStraight();
-  //   delay(2000);
-  // }
-  // int g = map(analogRead(POT), 0, 1023, 50, 160);
-  // pid.Kp = g;
-  // display.println(pid.Kp);
-  // display.display();
-
-  //loop to see tcrt vals
-  // while (true) {
-
-  //   display.clearDisplay();
-  //   display.setCursor(0, 0);
-  //   int error = sensor_array.calculateError();
-
-  //   int g = map(analogRead(POT), 0, 1023, 50, 160);
-  // pid.Kp = g;
-  // display.println(pid.Kp);
-  //   display.println("Array");
-  //   display.println(sensor_array.LFSensor[0]);
-  //   display.println(sensor_array.LFSensor[1]);
-  //   display.println(sensor_array.LFSensor[2]);
-  //   display.println(sensor_array.LFSensor[3]);
-  //   display.println(sensor_array.LFSensor[4]);
-  //   display.println(sensor_array.digitalArr[5]);
-
-  //   display.println(error);
-
-  //   display.display();
-  // }
-
-  //going from bin to tape circle
-  while (binToCircle)
-  {
-
-    display.setCursor(0, 0);
-    display.clearDisplay();
-    display.println("bin to circle");
-
-    display.display();
-    sensor_array.calculateError(); //this calcs error and updates all array vals in object
-
-    motorStraight();
-    // encoders.driveStraightContinuous();
-
-    // if (sensor_array.digitalArr[0] == 1 || sensor_array.digitalArr[1] == 1 || sensor_array.digitalArr[2] == 1 || sensor_array.digitalArr[3] == 1 || sensor_array.digitalArr[4] == 1)
-    if (sensor_array.anyFrontSensorOn())
-    {
-      binToCircle = false;
-      delay(400);
-      motorStop();
-      delay(100);
-      first_iter = true;
-      encoders.rightTurn90();
-
-      break;
-    }
-  }
-
-  int error = sensor_array.calculateError();
-  display.println("Array");
-  display.println(sensor_array.LFSensor[0]);
-  display.println(sensor_array.LFSensor[1]);
-  display.println(sensor_array.LFSensor[2]);
-  display.println(sensor_array.LFSensor[3]);
-  display.println(sensor_array.LFSensor[4]);
-  display.println(sensor_array.digitalArr[5]);
-
-  display.println(error);
-
-  display.display();
-
-  pid.calculatePID(error);
-  // display.println(pid.speed);
-  // display.println(pid.slow_down);
-  // display.display();
+  // follow tape
+  sensor_array.calculateError();
   motorPIDcontrol();
 
-  if (returnToBin && sensor_array.digitalArr[5] == 1)
-  {
-    first_iter = true;
-    motorStop();
-    delay(400);
-    // pivot(RIGHT);
-    encoders.rightTurn90_bin();
-    delay(2000);
-
-    sl.driveTillFour();
-
-    depositCans();
-
-    //backing up and pivoting left until we meet tape
-    encoders.backup();
-    // encoders.turnAroundContinuous();
-    first_iter = true;
-    encoders.leftTurn90();
-
-    dropCanDelay = 10;
-
-    //temporary commented out
-    returnToBin = false;
-
-    //encoders.rightTurn90();
-    // add function here for motorPID following and wait for collision sensor to perform lift
-    //if no collision after a certain time just dump anyways?
+  if(sensor_array.digitalArr[5] == 1) {
+    pivot(RIGHT);
   }
 
-  if (dropCanDelay <= 0 && sl.pollSonar() < SONAR_LIMIT && !returnToBin)
-  {
-    sl.stopMotors();
+  if (sl.pollSonar() < SONAR_LIMIT) {
+      //small backwards movement
+      encoders.backup();
+      //small pivot and open gate
+      encoders.rightPivot();
+      
+      //drive straight and close
+      encoders.drive(20, 20);
 
-    display.clearDisplay();
-    display.setCursor(0, 0);
-    display.println("found shit");
-    display.display();
+      //pivot left
+      pivot(LEFT);
 
-    sl.pivotLeft();
-
-    sl.goGetEm();
-
-    delay(1000);
-
-    // go back to the bin
-    // for(int i  = 0; i < TURN_SCALE; i++)
-    // {
-    //   sl.pivotRight();
-    // }
-    // encoders.turnAround();
-    encoders.rightTurn90();
-    // encoders.driveStraightContinuous();
-
-    returnToCircle = true; // this will make us return to the circle
-    returnToBin = true;
-
-    if (!sensor_array.anyFrontSensorOn())
-    {
-
-      while (returnToCircle)
-      {
-        display.setCursor(0, 0);
-        display.clearDisplay();
-        display.println("returning to circle");
-        display.display();
-        sensor_array.calculateError(); //this calcs error and updates all array vals in object
-
-        // motorStraight();
-        //using vals from sonar logic
-        pwm_start(MOTOR_R_F, MOTOR_FREQ, STRAIGHT_R , RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-
-        pwm_start(MOTOR_L_F, MOTOR_FREQ, STRAIGHT_L, RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-
-        if (sensor_array.digitalArr[0] == 1 || sensor_array.digitalArr[1] == 1 || sensor_array.digitalArr[2] == 1 || sensor_array.digitalArr[3] == 1 || sensor_array.digitalArr[4] == 1)
-        {
-          returnToCircle = false;
-          delay(400);
-          motorStop();
-          delay(100);
-
-          pivot(LEFT);
-
-          break;
-        }
-      }
-    }
+      //deposit
+      
   }
 
-  dropCanDelay--;
+
 }
 
 void motorPIDcontrol()
@@ -346,13 +179,11 @@ void pivot(int direction)
 void handle_R_interrupt()
 {
   encoders.handle_R_interrupt();
-  Serial.println("R");
 }
 
 void handle_L_interrupt()
 {
   encoders.handle_L_interrupt();
-  Serial.println("L");
 }
 
 void depositCans()

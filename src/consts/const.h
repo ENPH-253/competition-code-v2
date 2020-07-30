@@ -83,7 +83,7 @@
 // #define PLATFORM_DOWN_L 0
 // #define PLATFORM_UP_L 90
 
-#define SONAR_LIMIT 80
+#define SONAR_LIMIT 50
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
