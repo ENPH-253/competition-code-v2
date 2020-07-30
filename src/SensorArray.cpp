@@ -58,6 +58,9 @@ int SensorArray::calculateError() {
         error = 4.5;
         // error = 4;
 
+    else if ((digitalArr[0] == 0) && (digitalArr[1] == 1) && (digitalArr[2] == 1) && (digitalArr[3] == 1) && (digitalArr[4] == 0))
+        error = 0;
+
     return error;
 }
 

@@ -17,7 +17,7 @@ void openGate();
 void closeGate();
 void depositCan();
 
-Pid pid = Pid(KP);
+Pid pid = Pid(KP,KD);
 SensorArray sensor_array = SensorArray();
 Encoders encoders = Encoders(sensor_array);
 Sonar_Logic sl = Sonar_Logic(&encoders);
@@ -167,6 +167,22 @@ void motorStraight()
 
 void pivot(int direction)
 {
+  int motor_start = millis();
+  if (direction == LEFT) {
+    pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+  }
+  else if (direction == RIGHT) {
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
+  }
   while (true)
   {
 
@@ -175,37 +191,26 @@ void pivot(int direction)
     display.println("pivoting");
     // readLFSsensors();
     sensor_array.calculateError();
-    if (direction == LEFT)
-    {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-    }
-    else if (direction == RIGHT)
-    {
-      pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED , RESOLUTION_10B_COMPARE_FORMAT);
-    }
 
     display.display();
 
-    if (sensor_array.anyFrontSensorOn() && direction == LEFT)
+    if (sensor_array.anyFrontSensorOn())
     {
       motorStop();
       delay(200);
       break;
     }
-    else if (sensor_array.anyFrontSensorOn() && direction == RIGHT)
-    {
-      motorStop();
-      delay(200);
-      break;
+
+
+    if (millis() - motor_start > 200 && direction == LEFT ) {
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED - 200, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 200, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
     }
+
   }
 }
 

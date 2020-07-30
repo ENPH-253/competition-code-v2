@@ -1,6 +1,6 @@
 class Pid {
     public:
-    Pid(int kp);
+    Pid(int kp,int kd);
     void calculatePID(int error);
     int Kp, Kd;
     int p, d;
