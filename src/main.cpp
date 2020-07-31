@@ -203,7 +203,7 @@ void pivot(int direction)
     }
 
 
-    if (millis() - motor_start > 100 && direction == LEFT) {
+    if (millis() - motor_start > 200 && direction == LEFT) {
       pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED -70, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
