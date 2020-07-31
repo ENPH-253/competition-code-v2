@@ -99,11 +99,18 @@ void loop()
   if (sl.pollSonar() < SONAR_LIMIT)
   {
     int distance = sl.pollSonar();
+
+    display.print("Distance: ");
+    display.println(distance);
+    
     //small backwards movement
     encoders.adjustmentBackupCount((int)distance / 3);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(distance + SONAR_SAFETY_OFFSET);
+    
+  
+
 
     //drive straight and close
     encoders.drive(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);

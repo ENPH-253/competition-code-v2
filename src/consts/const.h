@@ -46,7 +46,7 @@
 #define KP 14
 #define KD 10
 //#define THRESHOLD 725
-#define THRESHOLD 710
+#define THRESHOLD 715
 #define BASE_SPEED 920
 
 #define MOTOR_FREQ 2000

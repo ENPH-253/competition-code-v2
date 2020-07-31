@@ -59,7 +59,6 @@ void Encoders::drive(int leftStop, int rightStop)
 
 void Encoders::turnR(int leftStop, int rightStop)
 {
-  delay(100);
 
   countL = 0;
   countR = 0;
@@ -68,6 +67,8 @@ void Encoders::turnR(int leftStop, int rightStop)
   pwm_start(MOTOR_R_B, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_F, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+  delay(100);
 
   bool rightDone = false;
   bool leftDone = false;
@@ -91,7 +92,6 @@ void Encoders::turnR(int leftStop, int rightStop)
 
 void Encoders::turnL(int leftStop, int rightStop)
 {
-  delay(100);
 
   countL = 0;
   countR = 0;
@@ -100,6 +100,8 @@ void Encoders::turnL(int leftStop, int rightStop)
   pwm_start(MOTOR_R_F, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+  delay(100);
 
   bool rightDone = false;
   bool leftDone = false;
