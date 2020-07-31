@@ -28,12 +28,8 @@ void Encoders::handle_R_interrupt()
 
 void Encoders::drive(int leftStop, int rightStop)
 {
-  delay(100);
-
   countL = 0;
   countR = 0;
-
-  delay(100);
 
   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_R_F, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);

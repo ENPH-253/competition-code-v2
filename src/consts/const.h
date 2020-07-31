@@ -84,6 +84,7 @@
 
 #define SONAR_LIMIT 55
 #define SONAR_LIMIT_CLOSE 15
+#define SONAR_SAFETY_OFFSET 7
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
@@ -93,8 +94,3 @@
 #define RIGHT 1
 
 #define MAX_TURNS 7
-
-// 126.76
-// 76.77
-// 23.621
-// 74

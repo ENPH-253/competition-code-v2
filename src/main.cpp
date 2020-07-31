@@ -96,44 +96,24 @@ void loop()
     // pivot_count++;
   }
 
-  if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+  if (sl.pollSonar() < SONAR_LIMIT)
   {
+    int distance = sl.pollSonar();
     //small backwards movement
-
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackupCount((int)distance / 3);
     //open gate and small pivot
     openGate();
-    encoders.rightPivotCount(19);
+    encoders.rightPivotCount(distance + SONAR_SAFETY_OFFSET);
 
     //drive straight and close
-    encoders.drive(22, 22);
-
-    closeGate();
-    //deposit
-
-    depositCans();
-    //pivot left
-    encoders.backup(24, 24);
-    pivot(LEFT);
-  }
-  else if (sl.pollSonar() < SONAR_LIMIT)
-  {
-    //small backwards movement
-    encoders.adjustmentBackup();
-    //open gate and small pivot
-    openGate();
-    encoders.rightPivot();
-
-    //drive straight and close
-    encoders.drive(62, 62);
-
+    encoders.drive(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);
     closeGate();
 
     //deposit
     depositCans();
 
     //pivot left
-    encoders.backup(62, 62);
+    encoders.backup(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);
     pivot(LEFT);
   }
 }
