@@ -26,40 +26,48 @@ void Encoders::handle_R_interrupt() {
     countR++;
 }
 
-void Encoders::drive(int leftStop, int rightStop) {
-  delay(100);
-
+void Encoders::drive(int leftStop, int rightStop, Adafruit_SSD1306 display) {
+  
   countL = 0;
   countR = 0;
-
-  delay(100);
+  
+  
 
   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_R_F, MOTOR_FREQ, FWD_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_L_F, MOTOR_FREQ, FWD_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, FWD_SPEED+100, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, FWD_SPEED+100, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+  
+  delay(100);
 
   bool rightDone = false;
   bool leftDone = false;
 
   while (!rightDone || !leftDone)
   {
+    display.clearDisplay();
+    display.setCursor(0,0);
+    display.println(countL);
+    display.println(countR);
+    display.display();
     if (countR > rightStop && !rightDone) {
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       rightDone = true;
+     
     }
 
     if (countL > leftStop && !leftDone) {
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       leftDone = true;
+     
     }
   }
 }
 
 void Encoders::turnR(int leftStop, int rightStop) {
-    delay(100);
+    
 
     countL = 0;
     countR = 0;
@@ -68,6 +76,8 @@ void Encoders::turnR(int leftStop, int rightStop) {
     pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    delay(100);                               
 
     bool rightDone = false;
     bool leftDone = false;
@@ -78,17 +88,20 @@ void Encoders::turnR(int leftStop, int rightStop) {
         pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
         pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
         rightDone = true;
+        delay(100);
       }
       if (countL > leftStop && !leftDone) {
         pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
         pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
         leftDone = true;
+        delay(100);
       }
+      
     }
 }
 
 void Encoders::turnL(int leftStop, int rightStop) {
-    delay(100);
+    
 
     countL = 0;
     countR = 0;
@@ -97,6 +110,8 @@ void Encoders::turnL(int leftStop, int rightStop) {
     pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    delay(100);
 
     bool rightDone = false;
     bool leftDone = false;
@@ -124,6 +139,8 @@ void Encoders::backup(int leftStop, int rightStop) {
   pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, BACK_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  
+  delay(100);
 
   bool rightDone = false;
   bool leftDone = false;
@@ -135,6 +152,7 @@ void Encoders::backup(int leftStop, int rightStop) {
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       rightDone = true;
+      delay(100);
     }
 
     if (countL > leftStop && !leftDone) 
@@ -142,6 +160,7 @@ void Encoders::backup(int leftStop, int rightStop) {
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       leftDone = true;
+      delay(100);
     }
   }
 }

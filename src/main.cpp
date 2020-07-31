@@ -41,7 +41,36 @@ void setup()
 
   //uncomment for start sequence
   //grab bin and pivot to tape
-  encoders.backup(4, 4);
+
+  // while(true){
+  //   display.println("Pivot Counts");
+  //   display.display();
+
+  //   encoders.rightPivotCount(20);
+
+  //   delay(2000);
+
+  //   display.clearDisplay();
+  //   display.setCursor(0,0);
+
+  //   display.println("Pivot");
+  //   display.display();
+
+  //   encoders.rightPivotCount(40);
+  //   delay(2000);
+  //   display.clearDisplay();
+  //   display.setCursor(0,0);
+  // }
+  // while(true){
+  //   //    display.setCursor(0,0);
+  //   // display.println(encoders.countL);
+  //   // display.println(encoders.countR);
+  //   // display.display();
+  //   // display.clearDisplay();
+  //   encoders.drive(20, 20,display);
+  //   delay(2000);
+  // }
+  encoders.backup(5, 5);
   pivot(LEFT);
 }
 
@@ -79,16 +108,16 @@ void loop()
   pid.calculatePID(error);
   motorPIDcontrol();
 
-  // if (sensor_array.digitalArr[5] == 1)
-  // {
-  //   // if (pivot_count == MAX_TURNS) {
-  //   //   motorStop();
-  //   //   while (true) {
-  //   //   }
-  //   // }
-  //   pivot(RIGHT);
-  //   // pivot_count++;
-  // }
+  if (sensor_array.digitalArr[5] == 1)
+  {
+    // if (pivot_count == MAX_TURNS) {
+    //   motorStop();
+    //   while (true) {
+    //   }
+    // }
+    pivot(RIGHT);
+    // pivot_count++;
+  }
 
   if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
   {
@@ -99,7 +128,7 @@ void loop()
     encoders.rightPivotCount(19);
 
     //drive straight and close
-    encoders.drive(24, 24);
+    encoders.drive(24, 24, display);
 
     closeGate();
     //deposit
@@ -118,7 +147,7 @@ void loop()
     encoders.rightPivot();
 
     //drive straight and close
-    encoders.drive(62, 62);
+    encoders.drive(62, 62, display);
 
     closeGate();
 
@@ -213,22 +242,22 @@ void pivot(int direction)
       break;
     }
 
-    if (millis() - motor_start > 200 && direction == LEFT)
-    {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    // if (millis() - motor_start > 200 && direction == LEFT)
+    // {
+    //   pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+    //   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-    }
-    if (millis() - motor_start > 200 && direction == RIGHT)
-    {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+    //   pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+    //   pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    // }
+    // if (millis() - motor_start > 200 && direction == RIGHT)
+    // {
+    //   pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    //   pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
-    }
+    //   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    //   pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+    // }
   }
 }
 

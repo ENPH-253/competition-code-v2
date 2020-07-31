@@ -46,7 +46,7 @@
 #define KP 14
 #define KD 10
 
-#define THRESHOLD 725
+#define THRESHOLD 690
 #define BASE_SPEED 925
 
 #define MOTOR_FREQ 2000
@@ -87,7 +87,7 @@
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
-#define PIVOT_SPEED 960
+#define PIVOT_SPEED 1000
 
 #define LEFT 0
 #define RIGHT 1
