@@ -33,7 +33,7 @@ void Sonar_Logic::goGetEm(){
     stopMotors();
 
     while(!pickedUp){
-    if (pollSonar() < SONAR_LIMIT - count * STRAIGHT_LENGTH)
+    if (pollSonar() < SONAR_LIMIT_FAR - count * STRAIGHT_LENGTH)
     {
         // encoder->driveStraight_Sonar(0);
         // stopMotors();
@@ -42,7 +42,7 @@ void Sonar_Logic::goGetEm(){
 
         count++;
     } else {
-        while (pollSonar() > SONAR_LIMIT - count * STRAIGHT_LENGTH)
+        while (pollSonar() > SONAR_LIMIT_FAR - count * STRAIGHT_LENGTH)
         {
             pivotRight();
             stopMotors();
@@ -123,7 +123,7 @@ void Sonar_Logic::driveStraight()
 
 void Sonar_Logic::pivotLeft()
 {
-  while(pollSonar() > SONAR_LIMIT){
+  while(pollSonar() > SONAR_LIMIT_FAR){
     pwm_start(MOTOR_L_B, PWM_FREQUENCY, LEFT_TURN_L, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_F, PWM_FREQUENCY, STOP, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, PWM_FREQUENCY, STOP, RESOLUTION_10B_COMPARE_FORMAT);
@@ -163,7 +163,7 @@ void Sonar_Logic::approachCan()
 
     distance = pollSonar();
   
-    while (distance > SONAR_LIMIT - count * STRAIGHT_LENGTH)
+    while (distance > SONAR_LIMIT_FAR - count * STRAIGHT_LENGTH)
     {
       pivotRight();
       stopMotors();

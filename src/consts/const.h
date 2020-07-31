@@ -43,11 +43,11 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 14
+#define KP 13
 #define KD 10
 #define THRESHOLD 450
 
-#define BASE_SPEED 925
+#define BASE_SPEED 950
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -65,18 +65,16 @@
 #define STRAIGHT_LENGTH 10
 
 #define GATE_CLOSED 27.62
-#define GATE_OPEN 110//85.76
+#define GATE_OPEN 110 //85.76
 #define SERVO_STEP 10
 
-#define PLATFORM_DOWN_R 126.76 
+#define PLATFORM_DOWN_R 126.76
 
-#define PLATFORM_UP_R 23.621 
-
+#define PLATFORM_UP_R 23.621
 
 #define PLATFORM_DOWN_L 23.621
 
-#define PLATFORM_UP_L 126.76 
-
+#define PLATFORM_UP_L 126.76
 
 // #define PLATFORM_DOWN_R 180
 // #define PLATFORM_UP_R 90
@@ -84,7 +82,8 @@
 // #define PLATFORM_DOWN_L 0
 // #define PLATFORM_UP_L 90
 
-#define SONAR_LIMIT 55
+#define SONAR_LIMIT_FAR 55
+#define SONAR_LIMIT_MED 35
 #define SONAR_LIMIT_CLOSE 15
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
@@ -98,5 +97,5 @@
 
 // 126.76
 // 76.77
- // 23.621
- // 74
+// 23.621
+// 74
