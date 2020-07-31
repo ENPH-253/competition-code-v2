@@ -8,8 +8,8 @@
 #define MOTOR_L_CCW PB_9
 
 #define PWMFREQ 2000
-#define FWD_SPEED 950
-#define BACK_SPEED 950
+#define FWD_SPEED 1000
+#define BACK_SPEED 1000
 // #define PIVOT_SPEED 950
 
 Encoders::Encoders(SensorArray sensor_arr) {
@@ -27,7 +27,7 @@ void Encoders::handle_R_interrupt() {
 }
 
 void Encoders::drive(int leftStop, int rightStop) {
-  delay(100);
+  
 
   countL = 0;
   countR = 0;
