@@ -34,7 +34,20 @@ void setup()
   display.setTextSize(1);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 0);
-
+  // while(true){
+  //   display.setTextSize(1);
+  // display.setTextColor(SSD1306_WHITE);
+  // display.setCursor(0, 0);
+  //   int error = sensor_array.calculateError();
+  //   display.println(sensor_array.LFSensor[0]);
+  //   display.println(sensor_array.LFSensor[1]);
+  //   display.println(sensor_array.LFSensor[2]);
+  //   display.println(sensor_array.LFSensor[3]);
+  //   display.println(sensor_array.LFSensor[4]);
+  //   display.println(sensor_array.digitalArr[5]);
+  //   display.display();
+  // display.clearDisplay();
+  // }
   Serial.begin(9600);
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);

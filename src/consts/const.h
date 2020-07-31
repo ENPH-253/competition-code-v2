@@ -43,7 +43,7 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 13
+#define KP 14
 #define KD 10
 #define THRESHOLD 770
 
