@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include "Pid.h"
 
-Pid::Pid(int kp) {
+Pid::Pid(int kp, int kd) {
     Kp = kp;
-    Kd =  0; 
+    Kd =  kd; 
     slow_ratio = 0.35;
     gain_ratio = 0.65;
 }
