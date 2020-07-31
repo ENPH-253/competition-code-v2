@@ -44,7 +44,7 @@
 #define TCRT_DIGITAL PB10
 
 #define KP 14
-#define KD 5
+#define KD 10
 // #define THRESHOLD 450
 
 
@@ -90,7 +90,7 @@
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
-#define PIVOT_SPEED 920
+#define PIVOT_SPEED 960
 
 #define LEFT 0
 #define RIGHT 1

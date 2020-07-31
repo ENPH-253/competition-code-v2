@@ -42,8 +42,8 @@ void setup()
   delay(1000);
   //uncomment for start sequence
   //grab bin and pivot to tape
-  // encoders.backup();
-  // pivot(LEFT);
+  encoders.backup(5, 5);
+  pivot(LEFT);
 
 }
 
@@ -83,13 +83,13 @@ void loop()
   motorPIDcontrol();
 
   if(sensor_array.digitalArr[5] == 1) {
-    if (pivot_count == MAX_TURNS) {
-      motorStop();
-      while (true) {
-      }
-    }
+    // if (pivot_count == MAX_TURNS) {
+    //   motorStop();
+    //   while (true) {
+    //   }
+    // }
     pivot(RIGHT);
-    pivot_count++;
+    // pivot_count++;
   }
 
   if (sl.pollSonar() < SONAR_LIMIT) {
@@ -203,12 +203,19 @@ void pivot(int direction)
     }
 
 
-    if (millis() - motor_start > 200 && direction == LEFT ) {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED -50, RESOLUTION_10B_COMPARE_FORMAT);
+    if (millis() - motor_start > 100 && direction == LEFT) {
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED -70, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 70, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    }
+    if (millis() - motor_start > 200 && direction == RIGHT) {
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
     }
 
   }
