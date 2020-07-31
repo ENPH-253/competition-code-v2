@@ -79,16 +79,16 @@ void loop()
   pid.calculatePID(error);
   motorPIDcontrol();
 
-  if (sensor_array.digitalArr[5] == 1)
-  {
-    // if (pivot_count == MAX_TURNS) {
-    //   motorStop();
-    //   while (true) {
-    //   }
-    // }
-    pivot(RIGHT);
-    // pivot_count++;
-  }
+  // if (sensor_array.digitalArr[5] == 1)
+  // {
+  //   // if (pivot_count == MAX_TURNS) {
+  //   //   motorStop();
+  //   //   while (true) {
+  //   //   }
+  //   // }
+  //   pivot(RIGHT);
+  //   // pivot_count++;
+  // }
 
   if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
   {
