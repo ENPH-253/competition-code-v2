@@ -153,3 +153,6 @@ void Encoders::rightPivot() {
 void Encoders::adjustmentBackup() {
   backup(14, 14);
 }
+void Encoders:: rightPivotCount(int counts){
+  turnR(0,counts);
+}
