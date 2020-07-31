@@ -38,9 +38,10 @@ void setup()
   Serial.begin(9600);
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100); //uncomment for start sequence
-               //grab bin and pivot to tape
-               encoders.backup(4, 4);
+
+  //uncomment for start sequence
+  //grab bin and pivot to tape
+  encoders.backup(5, 5);
   pivot(LEFT);
 }
 
@@ -78,76 +79,37 @@ void loop()
   pid.calculatePID(error);
   motorPIDcontrol();
 
-  // if (sensor_array.digitalArr[5] == 1)
-  // {
-  //   // if (pivot_count == MAX_TURNS) {
-  //   //   motorStop();
-  //   //   while (true) {
-  //   //   }
-  //   // }
-  //   pivot(RIGHT);
-  //   // pivot_count++;
-  // }
+  if (sensor_array.digitalArr[5] == 1)
+  {
+    // if (pivot_count == MAX_TURNS) {
+    //   motorStop();
+    //   while (true) {
+    //   }
+    // }
+    pivot(RIGHT);
+    // pivot_count++;
+  }
 
-  // if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
-  // {
-  //   //small backwards movement
-  //   encoders.adjustmentBackup();
-  //   //open gate and small pivot
-  //   openGate();
-  //   encoders.rightPivotCount(19);
+  if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+  {
+    //small backwards movement
+    encoders.adjustmentBackup();
+    //open gate and small pivot
+    openGate();
+    encoders.rightPivotCount(19);
 
-  //   //drive straight and close
-  //   encoders.drive(24, 24);
+    //drive straight and close
+    encoders.drive(24, 24);
 
-  //   closeGate();
-  //   //deposit
+    closeGate();
+    //deposit
 
-  //   depositCans();
-  //   //pivot left
-  //   encoders.backup(24, 24);
-  //   pivot(LEFT);
-  // }
-  // else if (sl.pollSonar() < SONAR_LIMIT_MED){
-  //   //small backwards movement
-  //   encoders.adjustmentBackup();
-  //   //open gate and small pivot
-  //   openGate();
-  //   encoders.rightPivot();
-
-  //   //drive straight and close
-  //   encoders.drive(36, 36);
-
-  //   closeGate();
-
-  //   //deposit
-  //   depositCans();
-
-  //   //pivot left
-  //   encoders.backup(36, 36);
-  //   pivot(LEFT);
-  // }
-  // else if (sl.pollSonar() < SONAR_LIMIT_FAR)
-  // {
-  //   //small backwards movement
-  //   encoders.adjustmentBackup();
-  //   //open gate and small pivot
-  //   openGate();
-  //   encoders.rightPivot();
-
-  //   //drive straight and close
-  //   encoders.drive(60, 60);
-
-  //   closeGate();
-
-  //   //deposit
-  //   depositCans();
-
-  //   //pivot left
-  //   encoders.backup(60, 60);
-  //   pivot(LEFT);
-  // }
-  if (sl.pollSonar() < SONAR_LIMIT_FAR)
+    depositCans();
+    //pivot left
+    encoders.backup(24, 24);
+    pivot(LEFT);
+  }
+  else if (sl.pollSonar() < SONAR_LIMIT_FAR)
   {
     //small backwards movement
     encoders.adjustmentBackup();
@@ -156,7 +118,7 @@ void loop()
     encoders.rightPivot();
 
     //drive straight and close
-    encoders.drive(SONAR_LIMIT_FAR + 5, SONAR_LIMIT_FAR + 5);
+    encoders.drive(62, 62);
 
     closeGate();
 
@@ -164,7 +126,7 @@ void loop()
     depositCans();
 
     //pivot left
-    encoders.backup(SONAR_LIMIT_FAR + 5, SONAR_LIMIT_FAR + 5);
+    encoders.backup(62, 62);
     pivot(LEFT);
   }
 }
@@ -283,13 +245,13 @@ void handle_L_interrupt()
 void openGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_OPEN, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100);
+  delay(500);
 }
 
 void closeGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_CLOSED, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100);
+  delay(500);
 }
 
 void depositCans()
@@ -297,7 +259,7 @@ void depositCans()
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_UP_L, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_UP_R, RESOLUTION_10B_COMPARE_FORMAT);
 
-  delay(900);
+  delay(1000);
 
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
