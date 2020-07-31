@@ -45,8 +45,6 @@
 
 #define KP 14
 #define KD 10
-// #define THRESHOLD 450
-
 
 #define THRESHOLD 725
 #define BASE_SPEED 925
@@ -67,18 +65,16 @@
 #define STRAIGHT_LENGTH 10
 
 #define GATE_CLOSED 27.62
-#define GATE_OPEN 110//85.76
+#define GATE_OPEN 110 //85.76
 #define SERVO_STEP 10
 
-#define PLATFORM_DOWN_R 126.76 
+#define PLATFORM_DOWN_R 126.76
 
-#define PLATFORM_UP_R 23.621 
-
+#define PLATFORM_UP_R 23.621
 
 #define PLATFORM_DOWN_L 23.621
 
-#define PLATFORM_UP_L 126.76 
-
+#define PLATFORM_UP_L 126.76
 
 // #define PLATFORM_DOWN_R 180
 // #define PLATFORM_UP_R 90
@@ -100,5 +96,5 @@
 
 // 126.76
 // 76.77
- // 23.621
- // 74
+// 23.621
+// 74
