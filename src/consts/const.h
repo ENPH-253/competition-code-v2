@@ -45,7 +45,7 @@
 
 #define KP 13
 #define KD 10
-#define THRESHOLD 450
+#define THRESHOLD 770
 
 #define BASE_SPEED 950
 
