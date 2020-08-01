@@ -22,7 +22,7 @@
 #define PHOTOINTERRUPTER_L PA12
 #define ENC_R_FWD 61
 #define ENC_L_FWD 61
-#define ENC_STRAIGHT_SPEED 910
+#define ENC_STRAIGHT_SPEED 950
 
 #define MOTOR_L_F PB_9
 #define MOTOR_L_B PB_8
@@ -43,11 +43,11 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 14
+#define KP 16
 #define KD 10
 //#define THRESHOLD 725
-#define THRESHOLD 715
-#define BASE_SPEED 920
+#define THRESHOLD 730
+#define BASE_SPEED 910
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -65,7 +65,7 @@
 #define STRAIGHT_LENGTH 10
 
 #define GATE_CLOSED 27.62
-#define GATE_OPEN 110 //85.76
+#define GATE_OPEN 90 //85.76
 #define SERVO_STEP 10
 
 #define PLATFORM_DOWN_R 126.76
@@ -84,6 +84,7 @@
 
 #define SONAR_LIMIT 55
 #define SONAR_LIMIT_CLOSE 15
+#define SONAR_LIMIT_MID 30
 #define SONAR_SAFETY_OFFSET 7
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0

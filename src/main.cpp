@@ -38,6 +38,10 @@ void setup()
   // Testing TCRTS in beginning
 
   // while(true){
+
+  //   display.clearDisplay();
+  //   display.setCursor(0, 0);
+
   //   display.println(encoders.countL);
   //   display.println(encoders.countR);
   //   int error = sensor_array.calculateError();
@@ -47,8 +51,7 @@ void setup()
   //   display.println(sensor_array.LFSensor[3]);
   //   display.println(sensor_array.LFSensor[4]);
   //   display.println(sensor_array.digitalArr[5]);
-  //   display.clearDisplay();
-  //   display.setCursor(0, 0);
+    
   //   display.display();
   // }
 
@@ -85,44 +88,71 @@ void loop()
   pid.calculatePID(error);
   motorPIDcontrol();
 
-  // if (sensor_array.digitalArr[5] == 1)
-  // {
-  //   // if (pivot_count == MAX_TURNS) {
-  //   //   motorStop();
-  //   //   while (true) {
-  //   //   }
-  //   // }
-  //   pivot(RIGHT);
-  //   // pivot_count++;
-  // }
-
-  if (sl.pollSonar() < SONAR_LIMIT)
+  if (sensor_array.digitalArr[5] == 1)
   {
-    int distance = sl.pollSonar();
+    pivot(RIGHT);
+  }
 
-    display.print("Distance: ");
-    display.println(distance);
-    
+  if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+  {
     //small backwards movement
-    encoders.adjustmentBackupCount((int)distance / 3);
+    encoders.adjustmentBackup();
     //open gate and small pivot
     openGate();
-    encoders.rightPivotCount(distance + SONAR_SAFETY_OFFSET);
-    
-  
-
+    encoders.rightPivotCount(14);
 
     //drive straight and close
-    encoders.drive(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);
+    encoders.drive(24, 24);
+
+    closeGate();
+    //deposit
+
+    depositCans();
+    //pivot left
+    encoders.backup(24, 24);
+    pivot(LEFT);
+  } else if (sl.pollSonar() < SONAR_LIMIT_MID) {
+
+    //small backwards movement
+    encoders.adjustmentBackup();
+    //open gate and small pivot
+    openGate();
+    encoders.rightPivotCount(18);
+
+    //drive straight and close
+    encoders.drive(43, 43);
+
     closeGate();
 
     //deposit
     depositCans();
 
     //pivot left
-    encoders.backup(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);
+    encoders.backup(43, 43);
     pivot(LEFT);
   }
+
+  else if (sl.pollSonar() < SONAR_LIMIT)
+  {
+    //small backwards movement
+    encoders.adjustmentBackup();
+    //open gate and small pivot
+    openGate();
+    encoders.rightPivotCount(23);
+
+    //drive straight and close
+    encoders.drive(62, 62);
+
+    closeGate();
+
+    //deposit
+    depositCans();
+
+    //pivot left
+    encoders.backup(62, 62);
+    pivot(LEFT);
+  }
+
 }
 
 void motorPIDcontrol()
@@ -205,10 +235,10 @@ void pivot(int direction)
 
     if (millis() - motor_start > 200 && direction == LEFT)
     {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED - 70, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 50, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED - 70, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
     }
     if (millis() - motor_start > 200 && direction == RIGHT)
@@ -241,7 +271,7 @@ void openGate()
 void closeGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_CLOSED, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100);
+  delay(200);
 }
 
 void depositCans()
