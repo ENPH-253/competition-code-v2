@@ -1,6 +1,7 @@
-class Pid {
-    public:
-    Pid(int kp,int kd);
+class Pid
+{
+public:
+    Pid(int kp, int kd);
     void calculatePID(int error);
     int Kp, Kd;
     int p, d;
