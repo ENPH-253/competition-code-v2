@@ -72,6 +72,9 @@ void setup()
   // }
   encoders.backup(5, 5);
   pivot(LEFT);
+  while (sensor_array.digitalArr[5] != 1)
+  {
+  }
 }
 
 void loop()
@@ -103,7 +106,7 @@ void loop()
   if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
   {
     //small backwards movement
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackup(8);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(16);
@@ -115,13 +118,32 @@ void loop()
     depositCans();
 
     //pivot left
-    encoders.backup(24, 24);
+    encoders.backup(18, 18);
     pivot(LEFT);
   }
+  else if (sl.pollSonar() < SONAR_LIMIT_MID)
+  {
+    //small backwards movement
+    encoders.adjustmentBackup(11);
+    //open gate and small pivot
+    openGate();
+    encoders.rightPivotCount(18);
+
+    //drive straight and close
+    encoders.drive(35, 35, display);
+    closeGate();
+    //deposit
+    depositCans();
+
+    //pivot left
+    encoders.backup(35, 35);
+    pivot(LEFT);
+  }
+
   else if (sl.pollSonar() < SONAR_LIMIT)
   {
     //small backwards movement
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackup(14);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(20);
@@ -206,7 +228,7 @@ void pivot(int direction)
     display.clearDisplay();
     display.setCursor(0, 0);
     display.println("pivoting");
-    // readLFSsensors();
+
     sensor_array.calculateError();
 
     display.display();

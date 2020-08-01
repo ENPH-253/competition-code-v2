@@ -47,7 +47,7 @@
 #define KD 10
 
 #define THRESHOLD 690
-#define BASE_SPEED 925
+#define BASE_SPEED 930
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -83,6 +83,7 @@
 // #define PLATFORM_UP_L 90
 
 #define SONAR_LIMIT 55
+#define SONAR_LIMIT_MID 35
 #define SONAR_LIMIT_CLOSE 15
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
