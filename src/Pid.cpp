@@ -6,6 +6,7 @@ Pid::Pid(int kp, int kd) {
     Kd =  kd; 
     slow_ratio = 0.35;
     gain_ratio = 0.65;
+    previousError = 0;
 }
 
 void Pid::calculatePID(int error) {

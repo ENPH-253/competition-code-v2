@@ -48,18 +48,25 @@ void setup()
 
 void loop()
 {
-  // while (true) {
+
   display.clearDisplay();
   display.setCursor(0, 0);
-  //   // display.println(encoders.countL);
-  //   // display.println(encoders.countR);
+
+
+  // while (true) {
+  // display.clearDisplay();
+  // display.setCursor(0, 0);
+  // //   // display.println(encoders.countL);
+  // //   // display.println(encoders.countR);
   // int error = sensor_array.calculateError();
   //   display.println(sensor_array.LFSensor[0]);
   //   display.println(sensor_array.LFSensor[1]);
   //   display.println(sensor_array.LFSensor[2]);
   //   display.println(sensor_array.LFSensor[3]);
   //   display.println(sensor_array.LFSensor[4]);
-  //   // display.println(sensor_array.digitalArr[5]);
+  //   display.println(sensor_array.digitalArr[5]);
+  //   display.println(error);
+  //   display.display();
 
   // }
 
@@ -69,13 +76,13 @@ void loop()
   // pid.Kp = g;
   // display.println(pid.Kp);
   // display.println(" ");
-  display.println(sensor_array.LFSensor[0]);
-  display.println(sensor_array.LFSensor[1]);
-  display.println(sensor_array.LFSensor[2]);
-  display.println(sensor_array.LFSensor[3]);
-  display.println(sensor_array.LFSensor[4]);
-  display.println(error);
-  display.display();
+  // display.println(sensor_array.LFSensor[0]);
+  // display.println(sensor_array.LFSensor[1]);
+  // display.println(sensor_array.LFSensor[2]);
+  // display.println(sensor_array.LFSensor[3]);
+  // display.println(sensor_array.LFSensor[4]);
+  // display.println(error);
+  // display.display();
 
   pid.calculatePID(error);
   motorPIDcontrol();
@@ -119,7 +126,7 @@ void loop()
     encoders.adjustmentBackup();
     //open gate and small pivot
     openGate();
-    encoders.rightPivot();
+    encoders.rightPivotCount(26);
 
     //drive straight and close
     encoders.drive(60, 60);
@@ -144,17 +151,35 @@ void motorPIDcontrol()
 
   if (gain > 0)
   {
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + gain, RESOLUTION_10B_COMPARE_FORMAT);
+    if(BASE_SPEED+gain > 1023 ){
+pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED-gain, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    } 
+
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + gain, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
     pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    
+    
 
     // pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED - slow_down, RESOLUTION_10B_COMPARE_FORMAT);
     // pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   }
   else
   {
+
+    if(BASE_SPEED-gain < -1023 ){
+pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED+gain, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+    } 
     // pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + slow_down, RESOLUTION_10B_COMPARE_FORMAT);
     // pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);

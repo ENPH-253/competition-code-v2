@@ -30,14 +30,14 @@ int SensorArray::calculateError() {
     }
 
     if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 1))
-        error = -4.5;
+        error = -4;
         // error = -4;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 1) && (digitalArr[4] == 1))
-        error = -4;
+        error = -3.1;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 1) && (digitalArr[4] == 0))
-        error = -3;
+        error = -2.5;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 1) && (digitalArr[3] == 1) && (digitalArr[4] == 0))
         error = -2;
@@ -49,13 +49,13 @@ int SensorArray::calculateError() {
         error = 2;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 1) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 0))
-        error = 3;
+        error = 2.5;
 
     else if ((digitalArr[0] == 1) && (digitalArr[1] == 1) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 0))
-        error = 4;
+        error = 3.1;
 
     else if ((digitalArr[0] == 1) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 0))
-        error = 4.5;
+        error = 4;
         // error = 4;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 1) && (digitalArr[2] == 1) && (digitalArr[3] == 1) && (digitalArr[4] == 0))

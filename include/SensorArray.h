@@ -3,7 +3,7 @@ class SensorArray {
     SensorArray();
     int LFSensor[5];
     int digitalArr[6];
-    int error;
+    double error;
     int calculateError();
     bool anyFrontSensorOn();
     // int threshold_array[5];

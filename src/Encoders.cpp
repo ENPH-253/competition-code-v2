@@ -8,8 +8,8 @@
 #define MOTOR_L_CCW PB_9
 
 #define PWMFREQ 2000
-#define FWD_SPEED 1000
-#define BACK_SPEED 1000
+#define FWD_SPEED 940
+#define BACK_SPEED 940
 // #define PIVOT_SPEED 950
 
 Encoders::Encoders(SensorArray sensor_arr) {
