@@ -111,10 +111,10 @@ void loop()
   {
     int distance = sl.pollSonar();
     //small backwards movement
-    encoders.adjustmentBackupCount((int)distance / 3);
+    encoders.adjustmentBackupCount((int)distance / 4);
     //open gate and small pivot
     openGate();
-    encoders.rightPivotCount((int)distance/3 + SONAR_SAFETY_OFFSET);
+    encoders.rightPivotCount((int)distance/4 + SONAR_SAFETY_OFFSET);
 
     //drive straight and close
     encoders.drive(distance + SONAR_SAFETY_OFFSET, distance + SONAR_SAFETY_OFFSET);
@@ -245,7 +245,7 @@ void openGate()
 void closeGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_CLOSED, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100);
+  delay(300);
 }
 
 void depositCans()
