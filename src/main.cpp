@@ -70,11 +70,17 @@ void setup()
   //   encoders.drive(20, 20,display);
   //   delay(2000);
   // }
+
+  // Starting sequence
   encoders.backup(5, 5);
   pivot(LEFT);
   while (sensor_array.digitalArr[5] != 1)
   {
-  }
+    int error = sensor_array.calculateError();
+    pid.calculatePID(error);
+    motorPIDcontrol(850);
+    }
+  pivot(RIGHT);
 }
 
 void loop()
@@ -95,7 +101,7 @@ void loop()
   display.display();
 
   pid.calculatePID(error);
-  motorPIDcontrol();
+  motorPIDcontrol(BASE_SPEED);
 
   if (sensor_array.digitalArr[5] == 1)
   {
@@ -162,25 +168,25 @@ void loop()
   }
 }
 
-void motorPIDcontrol()
+void motorPIDcontrol(int speed)
 {
   int gain = pid.speed;
   // int slow_down = pid.slow_down;
 
   if (gain > 0)
   {
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED + gain, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_F, MOTOR_FREQ, speed + gain, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-    pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, speed, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   }
   else
   {
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_R_F, MOTOR_FREQ, speed, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-    pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED - gain, RESOLUTION_10B_COMPARE_FORMAT);
+    pwm_start(MOTOR_L_F, MOTOR_FREQ, speed - gain, RESOLUTION_10B_COMPARE_FORMAT);
     pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   }
 }
