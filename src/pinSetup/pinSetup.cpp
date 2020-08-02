@@ -2,7 +2,6 @@
 
 void pinSetup()
 {
-    pinMode(COLLISION_SENSOR, INPUT_PULLUP);
     pinMode(ECHO_PIN, INPUT);
     pinMode(TRIG_PIN, OUTPUT);
 
