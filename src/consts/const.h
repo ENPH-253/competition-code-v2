@@ -43,10 +43,12 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 14
-#define KD 10
-//#define THRESHOLD 725
-#define THRESHOLD 710
+#define FUNSWITCH PB13
+
+#define KP 15
+#define KD 12
+
+#define THRESHOLD 725
 #define BASE_SPEED 920
 
 #define MOTOR_FREQ 2000
@@ -83,8 +85,8 @@
 // #define PLATFORM_UP_L 90
 
 #define SONAR_LIMIT 55
-#define SONAR_LIMIT_CLOSE 15
-#define SONAR_SAFETY_OFFSET 7
+#define SONAR_LIMIT_MID 30
+#define SONAR_LIMIT_CLOSE 12
 #define CAN_LIMIT 32.0
 #define CAN_TOO_CLOSE 25.0
 
@@ -94,3 +96,8 @@
 #define RIGHT 1
 
 #define MAX_TURNS 7
+
+// 126.76
+// 76.77
+// 23.621
+// 74

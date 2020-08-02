@@ -16,6 +16,7 @@ void depositCans();
 void openGate();
 void closeGate();
 void depositCan();
+void funMode();
 
 Pid pid = Pid(KP, KD);
 SensorArray sensor_array = SensorArray();
@@ -55,6 +56,10 @@ void setup()
   // Reseting platform to down position
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
+
+  if(!digitalRead(FUNSWITCH)){
+    funMode();
+  }
 
   //grab bin and pivot to tape
   encoders.backup(5, 5);
