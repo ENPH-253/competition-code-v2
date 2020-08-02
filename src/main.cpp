@@ -254,3 +254,8 @@ void depositCans()
 
   delay(100);
 }
+
+void funMode()
+{
+  delay(500);
+}
