@@ -17,6 +17,7 @@ void depositCans();
 void openGate();
 void closeGate();
 void depositCan();
+void funMode();
 
 Pid pid = Pid(KP, KD);
 SensorArray sensor_array = SensorArray();
@@ -40,7 +41,10 @@ void setup()
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
 
-  delay(1000);
+  if(!digitalRead(FUNSWITCH)){
+  funMode();
+  }
+  
   //uncomment for start sequence
   //grab bin and pivot to tape
   encoders.backup(5, 5);
@@ -328,4 +332,14 @@ void depositCans()
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
 
   delay(100);
+}
+
+void funMode()
+{
+  delay(12000);
+  depositCans();
+  while(true){
+    delay(1);
+    //do nothing
+  }
 }
