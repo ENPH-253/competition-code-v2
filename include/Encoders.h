@@ -15,6 +15,7 @@ public:
     void rightPivot();
     void rightPivotCount(int counts);
     void adjustmentBackup();
+    void adjustmentBackupCount(int counts);
     volatile int countL;
     volatile int countR;
     SensorArray sensor_array;
