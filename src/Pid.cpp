@@ -9,11 +9,10 @@ Pid::Pid(int kp, int kd) {
     previousError = 0;
 }
 
-void Pid::calculatePID(int error) {
-    p = error;
-    d = error - previousError;
-    speed = (Kp * p) + (Kd * d);
-  //  speed *= gain_ratio;
-    //slow_down = speed / slow_ratio;
-    previousError = error;
+void Pid::calculatePID(int error)
+{
+  p = error;
+  d = error - previousError;
+  speed = (Kp * p) + (Kd * d);
+  previousError = error;
 }

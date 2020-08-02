@@ -43,11 +43,11 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 25
-#define KD 11
-#define THRESHOLD 620
+#define KP 23
+#define KD 10
+#define THRESHOLD 550
 
-#define BASE_SPEED 950
+#define BASE_SPEED 900
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -59,21 +59,16 @@
 #define PLATFORM_DOWN_R 126.76 
 #define PLATFORM_UP_R 23.621 
 
-
 #define PLATFORM_DOWN_L 23.621
 #define PLATFORM_UP_L 126.76 
 
 #define SONAR_LIMIT 55
+#define SONAR_LIMIT_MID 30
 #define SONAR_LIMIT_CLOSE 15
 
-#define PIVOT_SPEED 910
+#define PIVOT_SPEED 890
 
 #define LEFT 0
 #define RIGHT 1
 
 #define MAX_TURNS 7
-
-// 126.76
-// 76.77
- // 23.621
- // 74
