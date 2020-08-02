@@ -305,5 +305,10 @@ void depositCans()
 
 void funMode()
 {
-  delay(500);
+  delay(12000);
+  depositCans();
+  while(true){
+    delay(1);
+    //do nothing
+  }
 }
