@@ -79,18 +79,18 @@ void setup()
 
 void loop()
 {
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.println(sensor_array.LFSensor[0]);
-  display.println(sensor_array.LFSensor[1]);
-  display.println(sensor_array.LFSensor[2]);
-  display.println(sensor_array.LFSensor[3]);
-  display.println(sensor_array.LFSensor[4]);
+  // display.clearDisplay();
+  // display.setCursor(0, 0);
+  // display.println(sensor_array.LFSensor[0]);
+  // display.println(sensor_array.LFSensor[1]);
+  // display.println(sensor_array.LFSensor[2]);
+  // display.println(sensor_array.LFSensor[3]);
+  // display.println(sensor_array.LFSensor[4]);
 
   int error = sensor_array.calculateError();
 
-  display.println(error);
-  display.display();
+  // display.println(error);
+  // display.display();
 
   // int g = map(analogRead(POT), 0, 1023, 0, 150);
   // pid.Kp = g;
@@ -106,7 +106,10 @@ void loop()
     pivot(RIGHT, PIVOT_SPEED);
   }
 
-  if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+
+if(sl.pollSonar() < SONAR_LIMIT){
+  if(sl.pollSonar() < SONAR_LIMIT){
+    if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
   {
     //small backwards movement
     encoders.adjustmentBackupCount(10);
@@ -171,7 +174,10 @@ void loop()
     //pivot left
     encoders.backup(62, 62);
     pivot(LEFT, PIVOT_SPEED);
-  }
+  } 
+}
+}
+  
 }
 
 void motorPIDcontrol(int speed)
