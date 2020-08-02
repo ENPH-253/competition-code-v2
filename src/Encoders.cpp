@@ -12,22 +12,25 @@
 #define BACK_SPEED 1000
 // #define PIVOT_SPEED 950
 
-Encoders::Encoders(SensorArray sensor_arr) {
-    countL = 0;
-    countR = 0;
-    sensor_array = sensor_arr;
+Encoders::Encoders(SensorArray sensor_arr)
+{
+  countL = 0;
+  countR = 0;
+  sensor_array = sensor_arr;
 }
 
-void Encoders::handle_L_interrupt() {
-    countL++;
+void Encoders::handle_L_interrupt()
+{
+  countL++;
 }
 
-void Encoders::handle_R_interrupt() {
-    countR++;
+void Encoders::handle_R_interrupt()
+{
+  countR++;
 }
 
-void Encoders::drive(int leftStop, int rightStop) {
-  
+void Encoders::drive(int leftStop, int rightStop)
+{
 
   countL = 0;
   countR = 0;
@@ -44,13 +47,15 @@ void Encoders::drive(int leftStop, int rightStop) {
 
   while (!rightDone || !leftDone)
   {
-    if (countR > rightStop && !rightDone) {
+    if (countR > rightStop && !rightDone)
+    {
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       rightDone = true;
     }
 
-    if (countL > leftStop && !leftDone) {
+    if (countL > leftStop && !leftDone)
+    {
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       leftDone = true;
@@ -58,65 +63,72 @@ void Encoders::drive(int leftStop, int rightStop) {
   }
 }
 
-void Encoders::turnR(int leftStop, int rightStop) {
-    delay(100);
+void Encoders::turnR(int leftStop, int rightStop)
+{
+  delay(100);
 
-    countL = 0;
-    countR = 0;
+  countL = 0;
+  countR = 0;
 
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-    bool rightDone = false;
-    bool leftDone = false;
+  bool rightDone = false;
+  bool leftDone = false;
 
-    while (!rightDone || !leftDone)
+  while (!rightDone || !leftDone)
+  {
+    if (countR > rightStop && !rightDone)
     {
-      if (countR > rightStop && !rightDone) {
-        pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        rightDone = true;
-      }
-      if (countL > leftStop && !leftDone) {
-        pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        leftDone = true;
-      }
+      pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      rightDone = true;
     }
+    if (countL > leftStop && !leftDone)
+    {
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      leftDone = true;
+    }
+  }
 }
 
-void Encoders::turnL(int leftStop, int rightStop) {
-    delay(100);
+void Encoders::turnL(int leftStop, int rightStop)
+{
+  delay(100);
 
-    countL = 0;
-    countR = 0;
+  countL = 0;
+  countR = 0;
 
-    pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-    pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_B, MOTOR_FREQ, PIVOT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-    bool rightDone = false;
-    bool leftDone = false;
+  bool rightDone = false;
+  bool leftDone = false;
 
-    while (!rightDone || !leftDone)
+  while (!rightDone || !leftDone)
+  {
+    if (countR > rightStop && !rightDone)
     {
-      if (countR > rightStop && !rightDone) {
-        pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        rightDone = true;
-      }
-      if (countL > leftStop && !leftDone) {
-        pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-        leftDone = true;
-      }
+      pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      rightDone = true;
     }
+    if (countL > leftStop && !leftDone)
+    {
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
+      leftDone = true;
+    }
+  }
 }
 
-void Encoders::backup(int leftStop, int rightStop) {
+void Encoders::backup(int leftStop, int rightStop)
+{
   countL = 0;
   countR = 0;
 
@@ -130,14 +142,14 @@ void Encoders::backup(int leftStop, int rightStop) {
 
   while (!rightDone || !leftDone)
   {
-    if (countR > rightStop && !rightDone) 
+    if (countR > rightStop && !rightDone)
     {
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       rightDone = true;
     }
 
-    if (countL > leftStop && !leftDone) 
+    if (countL > leftStop && !leftDone)
     {
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
@@ -146,13 +158,16 @@ void Encoders::backup(int leftStop, int rightStop) {
   }
 }
 
-void Encoders::rightPivot() {
+void Encoders::rightPivot()
+{
   turnR(0, 23);
 }
 
-void Encoders::adjustmentBackup() {
+void Encoders::adjustmentBackup()
+{
   backup(14, 14);
 }
-void Encoders:: rightPivotCount(int counts){
-  turnR(0,counts);
+void Encoders::rightPivotCount(int counts)
+{
+  turnR(0, counts);
 }
