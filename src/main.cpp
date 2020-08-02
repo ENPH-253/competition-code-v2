@@ -59,20 +59,21 @@ void setup()
 
   // }
 
-  if(!digitalRead(FUNSWITCH)){
-  funMode();
+  if (!digitalRead(FUNSWITCH))
+  {
+    funMode();
   }
 
   // Starting sequence
   encoders.backup(5, 5);
-  pivot(LEFT,860);
+  pivot(LEFT, 860);
   while (sensor_array.digitalArr[5] != 1)
   {
     int error = sensor_array.calculateError();
     pid.calculatePID(error);
     motorPIDcontrol(890);
   }
-  pivot(RIGHT,PIVOT_SPEED);
+  pivot(RIGHT, PIVOT_SPEED);
 }
 
 void loop()
@@ -98,10 +99,12 @@ void loop()
   if (sensor_array.digitalArr[5] == 1)
   {
 
-    pivot(RIGHT,PIVOT_SPEED);
+    pivot(RIGHT, PIVOT_SPEED);
   }
-  if(sl.pollSonar() < SONAR_LIMIT){
-    if(sl.pollSonar() < SONAR_LIMIT){
+  if (sl.pollSonar() < SONAR_LIMIT)
+  {
+    if (sl.pollSonar() < SONAR_LIMIT)
+    {
       if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
       {
         display.println("CLOSE");
@@ -120,7 +123,7 @@ void loop()
 
         //pivot left
         encoders.backup(18, 18);
-        pivot(LEFT,PIVOT_SPEED);
+        pivot(LEFT, PIVOT_SPEED);
       }
       else if (sl.pollSonar() < SONAR_LIMIT_MID)
       {
@@ -140,13 +143,13 @@ void loop()
 
         //pivot left
         encoders.backup(37, 37);
-        pivot(LEFT,PIVOT_SPEED);
+        pivot(LEFT, PIVOT_SPEED);
       }
 
       else if (sl.pollSonar() < SONAR_LIMIT)
       {
-            display.println("FFFFFFFFFFFFFFFFF");
-            display.display();
+        display.println("FFFFFFFFFFFFFFFFF");
+        display.display();
         //small backwards movement
         encoders.adjustmentBackup(11);
         //open gate and small pivot
@@ -163,10 +166,10 @@ void loop()
 
         //pivot left
         encoders.backup(57, 57);
-        pivot(LEFT,PIVOT_SPEED);
-        }
+        pivot(LEFT, PIVOT_SPEED);
       }
     }
+  }
 }
 
 void motorPIDcontrol(int speed)
@@ -210,7 +213,7 @@ void motorStraight()
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 }
 
-void pivot(int direction,int speed)
+void pivot(int direction, int speed)
 {
   int motor_start = millis();
   if (direction == LEFT)
@@ -279,7 +282,6 @@ void handle_L_interrupt()
 void openGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_OPEN, RESOLUTION_10B_COMPARE_FORMAT);
-  
 }
 
 void closeGate()
