@@ -174,5 +174,5 @@ void Encoders::rightPivotCount(int counts)
 
 void Encoders::adjustmentBackupCount(int counts)
 {
-  backup(counts, counts)
+  backup(counts, counts);
 }
