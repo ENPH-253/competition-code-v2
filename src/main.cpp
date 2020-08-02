@@ -46,12 +46,12 @@ void setup()
   //   int error = sensor_array.calculateError();
   //   display.setCursor(0,0);
 
-  //    display.println(sensor_array.LFSensor[0]);
-  // display.println(sensor_array.LFSensor[1]);
-  // display.println(sensor_array.LFSensor[2]);
-  // display.println(sensor_array.LFSensor[3]);
-  // display.println(sensor_array.LFSensor[4]);
-  // display.println(sensor_array.digitalArr[5]);
+  //   display.println(sensor_array.LFSensor[0]);
+  //   display.println(sensor_array.LFSensor[1]);
+  //   display.println(sensor_array.LFSensor[2]);
+  //   display.println(sensor_array.LFSensor[3]);
+  //   display.println(sensor_array.LFSensor[4]);
+  //   display.println(sensor_array.digitalArr[5]);
 
   //   display.display();
   //   display.clearDisplay();
@@ -134,7 +134,7 @@ void loop()
         depositCans();
 
         //pivot left
-        encoders.backup(35, 35);
+        encoders.backup(37, 37);
         pivot(LEFT,PIVOT_SPEED);
       }
 
