@@ -16,6 +16,7 @@ void depositCans();
 void openGate();
 void closeGate();
 void depositCan();
+void funMode();
 
 Pid pid = Pid(KP, KD);
 SensorArray sensor_array = SensorArray();
@@ -126,6 +127,10 @@ void loop()
 
     //deposit
     depositCans();
+
+    if(!digitalRead(FUNSWITCH)){
+    funMode();
+    }
 
     //pivot left
     encoders.backup(43, 43);
@@ -285,4 +290,9 @@ void depositCans()
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
 
   delay(100);
+}
+
+void funMode()
+{
+  delay(500);
 }

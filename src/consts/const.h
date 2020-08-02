@@ -43,6 +43,8 @@
 
 #define TCRT_DIGITAL PB10
 
+#define FUNSWITCH PB13
+
 #define KP 16
 #define KD 10
 //#define THRESHOLD 725
