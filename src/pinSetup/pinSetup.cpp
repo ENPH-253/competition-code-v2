@@ -27,7 +27,7 @@ void pinSetup()
     pinMode(PHOTOINTERRUPTER_R, INPUT_PULLUP);
     pinMode(PHOTOINTERRUPTER_L, INPUT_PULLUP);
 
-    pinMode(FUNSWITCH,INPUT_PULLUP);
+    pinMode(FUNSWITCH, INPUT_PULLUP);
 }
 
 void displaySetup(Adafruit_SSD1306 display)
