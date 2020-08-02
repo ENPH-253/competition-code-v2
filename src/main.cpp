@@ -36,7 +36,6 @@ void setup()
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 0);
 
-  Serial.begin(9600);
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
 
@@ -58,7 +57,6 @@ void setup()
   //   display.clearDisplay();
 
   // }
-
   if (!digitalRead(FUNSWITCH))
   {
     funMode();
@@ -305,7 +303,17 @@ void depositCans()
 
 void funMode()
 {
-  delay(9000);
+  int count = 9;
+  while (count > 0){
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("FUNMODE!");
+    display.print(count);
+    display.display();
+    count--;
+    delay(1000);
+  }
+
   depositCans();
   while (true)
   {
