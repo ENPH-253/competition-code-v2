@@ -109,7 +109,7 @@ void loop()
   if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
   {
     //small backwards movement
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackupCount(10);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(14);
@@ -129,7 +129,7 @@ void loop()
   {
 
     //small backwards movement
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackupCount(10);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(18);
@@ -155,7 +155,7 @@ void loop()
   else if (sl.pollSonar() < SONAR_LIMIT)
   {
     //small backwards movement
-    encoders.adjustmentBackup();
+    encoders.adjustmentBackupCount(10);
     //open gate and small pivot
     openGate();
     encoders.rightPivotCount(23);
