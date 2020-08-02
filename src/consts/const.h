@@ -9,7 +9,6 @@
 
 // all pins are defined here
 
-#define COLLISION_SENSOR PB13
 #define ECHO_PIN PB14
 #define TRIG_PIN PB15
 
