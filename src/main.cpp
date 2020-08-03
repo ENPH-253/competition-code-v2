@@ -12,7 +12,7 @@ void motorStop();
 void handle_R_interrupt();
 void handle_L_interrupt();
 void depositCans();
-
+void goGetCan(int pivot_count, int drive_count, int backup_count);
 void openGate();
 void closeGate();
 void funMode();
@@ -172,6 +172,26 @@ void loop()
     encoders.backup(62, 62);
     pivot(LEFT, PIVOT_SPEED);
   }
+}
+
+void goGetCan(int pivot_count, int drive_count, int backup_count)
+{
+  //small backwards movement
+  encoders.adjustmentBackupCount(backup_count);
+  //open gate and small pivot
+  openGate();
+  encoders.rightPivotCount(pivot_count);
+
+  //drive straight and close
+  encoders.drive(drive_count, drive_count);
+
+  closeGate();
+  //deposit
+
+  depositCans();
+  //pivot left
+  encoders.backup(drive_count, drive_count);
+  pivot(LEFT, BASE_SPEED);
 }
 
 void motorPIDcontrol(int speed)
