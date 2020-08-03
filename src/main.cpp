@@ -106,78 +106,79 @@ void loop()
     pivot(RIGHT, PIVOT_SPEED);
   }
 
-
-if(sl.pollSonar() < SONAR_LIMIT){
-  if(sl.pollSonar() < SONAR_LIMIT){
-    if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+  if (sl.pollSonar() < SONAR_LIMIT)
   {
-    //small backwards movement
-    encoders.adjustmentBackupCount(10);
-    //open gate and small pivot
-    openGate();
-    encoders.rightPivotCount(14);
-
-    //drive straight and close
-    encoders.drive(24, 24);
-
-    closeGate();
-    //deposit
-
-    depositCans();
-    //pivot left
-    encoders.backup(24, 24);
-    pivot(LEFT, PIVOT_SPEED);
-  }
-  else if (sl.pollSonar() < SONAR_LIMIT_MID)
-  {
-
-    //small backwards movement
-    encoders.adjustmentBackupCount(10);
-    //open gate and small pivot
-    openGate();
-    encoders.rightPivotCount(18);
-
-    //drive straight and close
-    encoders.drive(43, 43);
-
-    closeGate();
-
-    //deposit
-    depositCans();
-
-    if (!digitalRead(FUNSWITCH))
+    if (sl.pollSonar() < SONAR_LIMIT)
     {
-      funMode();
+      if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+      {
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(14);
+
+        //drive straight and close
+        encoders.drive(24, 24);
+
+        closeGate();
+        //deposit
+
+        depositCans();
+        //pivot left
+
+        encoders.backup(24, 24);
+        pivot(LEFT, PIVOT_SPEED);
+      }
+      else if (sl.pollSonar() < SONAR_LIMIT_MID)
+      {
+
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(18);
+
+        //drive straight and close
+        encoders.drive(43, 43);
+
+        closeGate();
+
+        //deposit
+        depositCans();
+
+        if (!digitalRead(FUNSWITCH))
+        {
+          funMode();
+        }
+
+        //pivot left
+        encoders.backup(43, 43);
+        pivot(LEFT, PIVOT_SPEED);
+      }
+
+      else if (sl.pollSonar() < SONAR_LIMIT)
+      {
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(23);
+
+        //drive straight and close
+        encoders.drive(62, 62);
+
+        closeGate();
+
+        //deposit
+        depositCans();
+
+        //pivot left
+        encoders.backup(62, 62);
+        pivot(LEFT, PIVOT_SPEED);
+      }
     }
-
-    //pivot left
-    encoders.backup(43, 43);
-    pivot(LEFT, PIVOT_SPEED);
   }
-
-  else if (sl.pollSonar() < SONAR_LIMIT)
-  {
-    //small backwards movement
-    encoders.adjustmentBackupCount(10);
-    //open gate and small pivot
-    openGate();
-    encoders.rightPivotCount(23);
-
-    //drive straight and close
-    encoders.drive(62, 62);
-
-    closeGate();
-
-    //deposit
-    depositCans();
-
-    //pivot left
-    encoders.backup(62, 62);
-    pivot(LEFT, PIVOT_SPEED);
-  } 
-}
-}
-  
 }
 
 void goGetCan(int pivot_count, int drive_count, int backup_count)
