@@ -23,6 +23,8 @@ Encoders encoders = Encoders(sensor_array);
 Sonar_Logic sl = Sonar_Logic(&encoders);
 int pivot_count = 0;
 
+float distance;
+
 void setup()
 {
   pinSetup();
@@ -65,7 +67,7 @@ void setup()
   }
 
   //grab bin and pivot to tape
-  encoders.backup(85, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 35);
+  encoders.backup(75, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 45);
   pivot(LEFT, 880);
 }
 
@@ -93,82 +95,76 @@ void loop()
   pid.calculatePID(error);
   motorPIDcontrol(BASE_SPEED);
 
+  distance = sl.pollSonar();
+
   if (sensor_array.digitalArr[5] == 1)
   {
     pivot(RIGHT, PIVOT_SPEED);
   }
 
-  if (sl.pollSonar() < SONAR_LIMIT)
+  if (distance < SONAR_LIMIT)
   {
-    if (sl.pollSonar() < SONAR_LIMIT)
+    if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
     {
-      if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
-      {
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(14);
+      //small backwards movement
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(16);
 
-        //drive straight and close
-        encoders.drive(24, 24);
+      //drive straight and close
+      encoders.drive(20, 20);
 
-        closeGate();
-        //deposit
+      closeGate();
+      //deposit
 
-        depositCans();
-        //pivot left
+      depositCans();
+      //pivot left
 
-        encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
-      else if (sl.pollSonar() < SONAR_LIMIT_MID)
-      {
+      encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      pivot(LEFT, PIVOT_SPEED);
+    }
+    else if (sl.pollSonar() < SONAR_LIMIT_MID)
+    {
 
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(18);
+      //small backwards movement
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(20);
 
-        //drive straight and close
-        encoders.drive(43, 43);
+      //drive straight and close
+      encoders.drive(43, 38);
 
-        closeGate();
+      closeGate();
 
-        //deposit
-        depositCans();
+      //deposit
+      depositCans();
 
-        if (!digitalRead(FUNSWITCH))
-        {
-          funMode();
-        }
+      //pivot left
+      encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      pivot(LEFT, PIVOT_SPEED);
+    }
 
-        //pivot left
-        encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
+    else if (sl.pollSonar() < SONAR_LIMIT)
+    {
+      //small backwards movement
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(30);
 
-      else if (sl.pollSonar() < SONAR_LIMIT)
-      {
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(23);
+      //drive straight and close
+      encoders.drive(62, 56);
 
-        //drive straight and close
-        encoders.drive(62, 62);
+      closeGate();
 
-        closeGate();
+      //deposit
+      depositCans();
 
-        //deposit
-        depositCans();
-
-        //pivot left
-        encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
+      //pivot left
+      encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      pivot(LEFT, PIVOT_SPEED);
     }
   }
 }

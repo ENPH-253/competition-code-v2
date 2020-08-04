@@ -21,7 +21,7 @@
 #define PHOTOINTERRUPTER_L PA12
 #define ENC_R_FWD 61
 #define ENC_L_FWD 61
-#define ENC_STRAIGHT_SPEED 950
+#define ENC_STRAIGHT_SPEED 920
 
 #define MOTOR_L_F PB_9
 #define MOTOR_L_B PB_8
@@ -47,7 +47,7 @@
 #define KP 16
 #define KD 10
 //#define THRESHOLD 725
-#define THRESHOLD 730
+#define THRESHOLD 710
 #define BASE_SPEED 910
 
 #define MOTOR_FREQ 2000
