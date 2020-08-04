@@ -95,7 +95,7 @@
 #define RIGHT 1
 
 #define MAX_TURNS 7
-#define FINAL_DUMP 57
+#define FINAL_DUMP 57000
 
 // 126.76
 // 76.77
