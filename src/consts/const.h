@@ -92,6 +92,7 @@
 #define RIGHT 1
 
 #define MAX_TURNS 7
+#define FINAL_DUMP 57000
 
 #define CAN_LIMIT 0
 #define CAN_TOO_CLOSE 0

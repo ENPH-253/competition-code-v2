@@ -22,6 +22,7 @@ SensorArray sensor_array = SensorArray();
 Encoders encoders = Encoders(sensor_array);
 Sonar_Logic sl = Sonar_Logic(&encoders);
 int pivot_count = 0;
+double start_time;
 float distance;
 
 void setup()
@@ -64,6 +65,7 @@ void setup()
   {
     funMode();
   }
+  start_time = millis();
 
   //grab bin and pivot to tape
   encoders.backup(65, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 55);
@@ -164,6 +166,9 @@ void loop()
       encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED+ 10);
       pivot(LEFT, PIVOT_SPEED);
     }
+  }
+  if (millis() - start_time > FINAL_DUMP) {
+    depositCans();
   }
 }
 
