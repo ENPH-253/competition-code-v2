@@ -65,16 +65,8 @@ void setup()
   }
 
   //grab bin and pivot to tape
-  encoders.backup(4, 4);
-
-  pivot(LEFT, 860);
-  while (sensor_array.digitalArr[5] != 1)
-  {
-    int error = sensor_array.calculateError();
-    pid.calculatePID(error);
-    motorPIDcontrol(890);
-  }
-  pivot(RIGHT, PIVOT_SPEED);
+  encoders.backup(85, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 35);
+  pivot(LEFT, 880);
 }
 
 void loop()
@@ -127,7 +119,7 @@ void loop()
         depositCans();
         //pivot left
 
-        encoders.backup(24, 24);
+        encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
       else if (sl.pollSonar() < SONAR_LIMIT_MID)
@@ -153,7 +145,7 @@ void loop()
         }
 
         //pivot left
-        encoders.backup(43, 43);
+        encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
 
@@ -174,7 +166,7 @@ void loop()
         depositCans();
 
         //pivot left
-        encoders.backup(62, 62);
+        encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
     }
@@ -197,7 +189,7 @@ void goGetCan(int pivot_count, int drive_count, int backup_count)
 
   depositCans();
   //pivot left
-  encoders.backup(drive_count, drive_count);
+  encoders.backup(drive_count, drive_count, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
   pivot(LEFT, BASE_SPEED);
 }
 
