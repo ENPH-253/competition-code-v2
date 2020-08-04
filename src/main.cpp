@@ -285,7 +285,7 @@ void handle_L_interrupt()
 void openGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_OPEN, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(100);
+  // delay(100);
 }
 
 void closeGate()
