@@ -342,8 +342,23 @@ void depositCans()
 
 void funMode()
 {
-  delay(8000);
+  int count = 8;
+  while(count > 0){
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println("FUNMODE!");
+    display.println(count);
+    display.display();
+    delay(1000);
+    count--;
+  }
+  //delaying a little bit extra
+  delay(500);
   depositCans();
+  display.clearDisplay();
+  display.print("Depositing cans");
+  display.display();
+  
   while (true)
   {
     delay(1);
