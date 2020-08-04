@@ -163,6 +163,10 @@ void loop()
     pivot(LEFT, BASE_SPEED);
   }
   }
+
+  if (millis() - start_time > FINAL_DUMP) {
+    depositCans();
+  }
 }
 
 void goGetCan(int pivot_count, int drive_count, int backup_count)
