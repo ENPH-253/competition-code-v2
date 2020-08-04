@@ -47,7 +47,7 @@
 #define KD 10
 #define THRESHOLD 400
 
-#define BASE_SPEED 920
+#define BASE_SPEED 910
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -86,7 +86,7 @@
 #define SONAR_LIMIT_MID 35
 #define SONAR_LIMIT_CLOSE 15
 
-#define PIVOT_SPEED 940
+#define PIVOT_SPEED 925
 
 #define LEFT 0
 #define RIGHT 1
