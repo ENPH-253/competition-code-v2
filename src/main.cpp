@@ -164,6 +164,9 @@ void loop()
       pivot(LEFT, PIVOT_SPEED);
     }
   }
+  if (millis() - start_time > FINAL_DUMP) {
+    depositCans();
+  }
 }
 
 void motorPIDcontrol(int speed)
