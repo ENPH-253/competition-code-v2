@@ -67,8 +67,8 @@ void setup()
   start_time = millis();
 
   //grab bin and pivot to tape
-  encoders.backup(85, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 35);
-  pivot(LEFT, 880);
+  encoders.backup(75, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 45);
+  pivot(LEFT, 870);
   // while (sensor_array.digitalArr[5] != 1)
   // {
   //   int error = sensor_array.calculateError();
@@ -148,7 +148,7 @@ void loop()
     encoders.adjustmentBackup();
     //open gate and small pivot
     openGate();
-    encoders.rightPivotCount(20);
+    encoders.rightPivotCount(25);
 
     //drive straight and close
     encoders.drive(60, 60, ENC_STRAIGHT_SPEED+10, ENC_STRAIGHT_SPEED);
@@ -166,6 +166,10 @@ void loop()
 
   if (millis() - start_time > FINAL_DUMP) {
     depositCans();
+    motorStop();
+    while(true) {
+
+    }
   }
 }
 
@@ -322,7 +326,7 @@ void handle_L_interrupt()
 void openGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_OPEN, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(500);
+  // delay(500);
 }
 
 void closeGate()
