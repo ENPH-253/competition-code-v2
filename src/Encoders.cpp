@@ -165,7 +165,7 @@ void Encoders::rightPivot()
 
 void Encoders::adjustmentBackup()
 {
-  backup(14, 14);
+  backup(14, 14, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
 }
 void Encoders::rightPivotCount(int counts)
 {
@@ -174,5 +174,5 @@ void Encoders::rightPivotCount(int counts)
 
 void Encoders::adjustmentBackupCount(int counts)
 {
-  backup(counts, counts);
+  backup(counts, counts, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
 }

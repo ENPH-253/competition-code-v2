@@ -118,7 +118,7 @@ void loop()
 
         depositCans();
         //pivot left
-        encoders.backup(24, 24);
+        encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
       else if (sl.pollSonar() < SONAR_LIMIT_MID)
@@ -144,7 +144,7 @@ void loop()
         }
 
         //pivot left
-        encoders.backup(43, 43);
+        encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
 
@@ -165,7 +165,7 @@ void loop()
         depositCans();
 
         //pivot left
-        encoders.backup(62, 62);
+        encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
         pivot(LEFT, PIVOT_SPEED);
       }
     }
