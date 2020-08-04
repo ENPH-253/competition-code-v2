@@ -9,7 +9,7 @@
 
 // all pins are defined here
 
-#define COLLISION_SENSOR PB13
+#define FUNSWITCH PB13
 #define ECHO_PIN PB14
 #define TRIG_PIN PB15
 
@@ -22,7 +22,7 @@
 #define PHOTOINTERRUPTER_L PA12
 #define ENC_R_FWD 61
 #define ENC_L_FWD 61
-#define ENC_STRAIGHT_SPEED 900
+#define ENC_STRAIGHT_SPEED 920
 
 #define MOTOR_L_F PB_9
 #define MOTOR_L_B PB_8
@@ -43,11 +43,11 @@
 
 #define TCRT_DIGITAL PB10
 
-#define KP 23
+#define KP 19
 #define KD 10
-#define THRESHOLD 550
+#define THRESHOLD 580
 
-#define BASE_SPEED 900
+#define BASE_SPEED 915
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -66,7 +66,7 @@
 #define SONAR_LIMIT_MID 30
 #define SONAR_LIMIT_CLOSE 15
 
-#define PIVOT_SPEED 890
+#define PIVOT_SPEED 920
 
 #define LEFT 0
 #define RIGHT 1

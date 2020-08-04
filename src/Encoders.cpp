@@ -29,14 +29,17 @@ void Encoders::handle_R_interrupt()
   countR++;
 }
 
-void Encoders::drive(int leftStop, int rightStop)
+void Encoders::drive(int leftStop, int rightStop,int speedL,int speedR)
 {
+
   countL = 0;
   countR = 0;
 
+  delay(100);
+
   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_R_F, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_L_F, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, speedR, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, speedL, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
   bool rightDone = false;
@@ -124,15 +127,15 @@ void Encoders::turnL(int leftStop, int rightStop)
   }
 }
 
-void Encoders::backup(int leftStop, int rightStop)
+void Encoders::backup(int leftStop, int rightStop,int speedL,int speedR)
 {
   countL = 0;
   countR = 0;
 
-  pwm_start(MOTOR_R_B, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_B, MOTOR_FREQ, speedR, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-  pwm_start(MOTOR_L_B, MOTOR_FREQ, ENC_STRAIGHT_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_L_B, MOTOR_FREQ, speedL, RESOLUTION_10B_COMPARE_FORMAT);
 
   bool rightDone = false;
   bool leftDone = false;
@@ -155,17 +158,22 @@ void Encoders::backup(int leftStop, int rightStop)
   }
 }
 
+
 void Encoders::rightPivot()
 {
   turnR(0, 23);
+}
+
+void Encoders::adjustmentBackup()
+{
+  backup(14, 14,ENC_STRAIGHT_SPEED,ENC_STRAIGHT_SPEED);
 }
 void Encoders::rightPivotCount(int counts)
 {
   turnR(0, counts);
 }
 
-
-
-void Encoders::adjustmentBackup() {
-  backup(10, 10);
+void Encoders::adjustmentBackupCount(int counts)
+{
+  backup(counts, counts,ENC_STRAIGHT_SPEED,ENC_STRAIGHT_SPEED);
 }
