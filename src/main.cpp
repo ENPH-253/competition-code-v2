@@ -22,6 +22,7 @@ SensorArray sensor_array = SensorArray();
 Encoders encoders = Encoders(sensor_array);
 Sonar_Logic sl = Sonar_Logic(&encoders);
 int pivot_count = 0;
+float distance;
 
 void setup()
 {
@@ -65,109 +66,103 @@ void setup()
   }
 
   //grab bin and pivot to tape
-  encoders.backup(85, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 35);
+  encoders.backup(65, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 55);
   pivot(LEFT, 880);
 }
 
 void loop()
 {
-  display.clearDisplay();
-  display.setCursor(0, 0);
-  display.println(sensor_array.LFSensor[0]);
-  display.println(sensor_array.LFSensor[1]);
-  display.println(sensor_array.LFSensor[2]);
-  display.println(sensor_array.LFSensor[3]);
-  display.println(sensor_array.LFSensor[4]);
-
   int error = sensor_array.calculateError();
-
-  display.println(error);
-  display.display();
-
-  // int g = map(analogRead(POT), 0, 1023, 0, 150);
-  // pid.Kp = g;
-  // display.println(pid.Kp);
-  // display.println(" ");
 
   // follow tape
   pid.calculatePID(error);
   motorPIDcontrol(BASE_SPEED);
 
+  distance = sl.pollSonar();
+
   if (sensor_array.digitalArr[5] == 1)
   {
     pivot(RIGHT, PIVOT_SPEED);
   }
-  if (sl.pollSonar() < SONAR_LIMIT_FAR)
+
+  if (distance < SONAR_LIMIT_FAR)
   {
-    if (sl.pollSonar() < SONAR_LIMIT_FAR)
+    if (distance < SONAR_LIMIT_CLOSE)
     {
 
-      if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
-      {
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(14);
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("CC");
+      display.display();
 
-        //drive straight and close
-        encoders.drive(24, 24);
+      //small backwards movement
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(16);
 
-        closeGate();
-        //deposit
+      //drive straight and close
+      encoders.drive(20, 20);
 
-        depositCans();
-        //pivot left
-        encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
-      else if (sl.pollSonar() < SONAR_LIMIT_MID)
-      {
+      closeGate();
+      //deposit
 
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(18);
+      depositCans();
+      //pivot left
+      encoders.backup(20, 20, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED+10);
+      pivot(LEFT, PIVOT_SPEED);
+    }
+    else if (distance < SONAR_LIMIT_MID)
+    {
 
-        //drive straight and close
-        encoders.drive(43, 43);
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("MMMMMMMMMMMMMMM");
+      display.display();
 
-        closeGate();
+      //small backwards movement
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(18);
 
-        //deposit
-        depositCans();
+      //drive straight and close
+      encoders.drive(43, 43);
 
-        if (!digitalRead(FUNSWITCH))
-        {
-          funMode();
-        }
+      closeGate();
 
-        //pivot left
-        encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
+      //deposit
+      depositCans();
 
-      else if (sl.pollSonar() < SONAR_LIMIT_FAR)
-      {
-        //small backwards movement
-        encoders.adjustmentBackupCount(10);
-        //open gate and small pivot
-        openGate();
-        encoders.rightPivotCount(23);
+      //pivot left
+      encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED+10);
+      pivot(LEFT, PIVOT_SPEED);
+    }
 
-        //drive straight and close
-        encoders.drive(62, 62);
+    else if (sl.pollSonar() < SONAR_LIMIT_FAR)
+    {
+      //small backwards movem
+      
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+      display.display();
+      encoders.adjustmentBackupCount(10);
+      //open gate and small pivot
+      openGate();
+      encoders.rightPivotCount(22);
 
-        closeGate();
+      //drive straight and close
+      encoders.drive(62, 62);
 
-        //deposit
-        depositCans();
+      closeGate();
 
-        //pivot left
-        encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-        pivot(LEFT, PIVOT_SPEED);
-      }
+      //deposit
+      depositCans();
+
+      //pivot left
+      encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED+ 10);
+      pivot(LEFT, PIVOT_SPEED);
     }
   }
 }
@@ -252,10 +247,10 @@ void pivot(int direction, int speed)
 
     if (millis() - motor_start > 200 && direction == LEFT)
     {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, speed - 50, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, speed - 50, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
     }
     if (millis() - motor_start > 200 && direction == RIGHT)

@@ -47,7 +47,7 @@
 #define KD 10
 #define THRESHOLD 400
 
-#define BASE_SPEED 900
+#define BASE_SPEED 920
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
@@ -82,18 +82,20 @@
 // #define PLATFORM_DOWN_L 0
 // #define PLATFORM_UP_L 90
 
-#define SONAR_LIMIT_FARTHEST 85
 #define SONAR_LIMIT_FAR 55
 #define SONAR_LIMIT_MID 35
-#define SONAR_LIMIT_CLOSE 35
-#define SONAR_LIMIT_CLOSEST 15
+#define SONAR_LIMIT_CLOSE 15
 
-#define PIVOT_SPEED 900
+#define PIVOT_SPEED 940
 
 #define LEFT 0
 #define RIGHT 1
 
 #define MAX_TURNS 7
+
+#define CAN_LIMIT 0
+#define CAN_TOO_CLOSE 0
+
 
 // 126.76
 // 76.77
