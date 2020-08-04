@@ -47,8 +47,8 @@
 #define KP 15
 #define KD 12
 
-#define THRESHOLD 725
-#define BASE_SPEED 890
+#define THRESHOLD 700
+#define BASE_SPEED 900
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50

@@ -117,7 +117,7 @@ void loop()
       depositCans();
 
       //pivot left
-      encoders.backup(18, 18, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      encoders.backup(17, 17, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
       pivot(LEFT, PIVOT_SPEED);
     }
     else if (distance < SONAR_LIMIT_MID)
@@ -166,6 +166,10 @@ void loop()
   }
   if (millis() - start_time > FINAL_DUMP) {
     depositCans();
+    motorStop();
+    while(true) {
+
+    }
   }
 }
 
@@ -248,19 +252,19 @@ void pivot(int direction, int speed)
 
     if (millis() - motor_start > 200 && direction == LEFT)
     {
-      pwm_start(MOTOR_R_F, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_F, MOTOR_FREQ, speed - 80, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 
-      pwm_start(MOTOR_L_B, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_B, MOTOR_FREQ, speed - 80, RESOLUTION_10B_COMPARE_FORMAT);
       pwm_start(MOTOR_L_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
     }
     if (millis() - motor_start > 200 && direction == RIGHT)
     {
       pwm_start(MOTOR_R_F, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_R_B, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_R_B, MOTOR_FREQ, speed - 65, RESOLUTION_10B_COMPARE_FORMAT);
 
       pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-      pwm_start(MOTOR_L_F, MOTOR_FREQ, speed - 70, RESOLUTION_10B_COMPARE_FORMAT);
+      pwm_start(MOTOR_L_F, MOTOR_FREQ, speed - 65, RESOLUTION_10B_COMPARE_FORMAT);
     }
   }
   display.clearDisplay();
