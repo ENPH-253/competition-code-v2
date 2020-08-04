@@ -12,7 +12,7 @@ void motorStop();
 void handle_R_interrupt();
 void handle_L_interrupt();
 void depositCans();
-void goGetCan(int pivot_count, int drive_count, int backup_count);
+
 void openGate();
 void closeGate();
 void funMode();
@@ -22,8 +22,7 @@ SensorArray sensor_array = SensorArray();
 Encoders encoders = Encoders(sensor_array);
 Sonar_Logic sl = Sonar_Logic(&encoders);
 int pivot_count = 0;
-double start_time;
-double check_time;
+
 void setup()
 {
   pinSetup();
@@ -64,19 +63,10 @@ void setup()
   {
     funMode();
   }
-  start_time = millis();
 
   //grab bin and pivot to tape
-  encoders.backup(4, 4);
-
-  pivot(LEFT, 860);
-  while (sensor_array.digitalArr[5] != 1)
-  {
-    int error = sensor_array.calculateError();
-    pid.calculatePID(error);
-    motorPIDcontrol(890);
-  }
-  pivot(RIGHT, PIVOT_SPEED);
+  encoders.backup(85, 105, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED + 35);
+  pivot(LEFT, 880);
 }
 
 void loop()
@@ -94,6 +84,11 @@ void loop()
   display.println(error);
   display.display();
 
+  // int g = map(analogRead(POT), 0, 1023, 0, 150);
+  // pid.Kp = g;
+  // display.println(pid.Kp);
+  // display.println(" ");
+
   // follow tape
   pid.calculatePID(error);
   motorPIDcontrol(BASE_SPEED);
@@ -102,60 +97,79 @@ void loop()
   {
     pivot(RIGHT, PIVOT_SPEED);
   }
-  if (sl.pollSonar() < SONAR_LIMIT_FARTHEST)
+  if (sl.pollSonar() < SONAR_LIMIT_FAR)
   {
-    if (sl.pollSonar() < SONAR_LIMIT_FARTHEST)
+    if (sl.pollSonar() < SONAR_LIMIT_FAR)
     {
 
-      if (sl.pollSonar() < SONAR_LIMIT_CLOSEST)
+      if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
       {
-        goGetCan(14, 14, 10);
-      }
-      else if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
-      {
-        goGetCan(14, 17, 10);
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(14);
+
+        //drive straight and close
+        encoders.drive(24, 24);
+
+        closeGate();
+        //deposit
+
+        depositCans();
+        //pivot left
+        encoders.backup(24, 24);
+        pivot(LEFT, PIVOT_SPEED);
       }
       else if (sl.pollSonar() < SONAR_LIMIT_MID)
       {
-        goGetCan(14, 20, 10);
+
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(18);
+
+        //drive straight and close
+        encoders.drive(43, 43);
+
+        closeGate();
+
+        //deposit
+        depositCans();
+
+        if (!digitalRead(FUNSWITCH))
+        {
+          funMode();
+        }
+
+        //pivot left
+        encoders.backup(43, 43);
+        pivot(LEFT, PIVOT_SPEED);
       }
 
       else if (sl.pollSonar() < SONAR_LIMIT_FAR)
       {
-        goGetCan(14, 24, 10);
-      }
-      else if (sl.pollSonar() < SONAR_LIMIT_FARTHEST)
-      {
-        goGetCan(14, 27, 10);
-      }
-      check_time = millis();
+        //small backwards movement
+        encoders.adjustmentBackupCount(10);
+        //open gate and small pivot
+        openGate();
+        encoders.rightPivotCount(23);
 
-      if (check_time - start_time > 58000)
-      {
+        //drive straight and close
+        encoders.drive(62, 62);
+
+        closeGate();
+
+        //deposit
         depositCans();
+
+        //pivot left
+        encoders.backup(62, 62);
+        pivot(LEFT, PIVOT_SPEED);
       }
     }
   }
-}
-
-void goGetCan(int pivot_count, int drive_count, int backup_count)
-{
-  //small backwards movement
-  encoders.adjustmentBackupCount(backup_count);
-  //open gate and small pivot
-  openGate();
-  encoders.rightPivotCount(pivot_count);
-
-  //drive straight and close
-  encoders.drive(drive_count, drive_count);
-
-  closeGate();
-  //deposit
-
-  depositCans();
-  //pivot left
-  encoders.backup(drive_count, drive_count);
-  pivot(LEFT, BASE_SPEED);
 }
 
 void motorPIDcontrol(int speed)
@@ -274,7 +288,7 @@ void openGate()
 void closeGate()
 {
   pwm_start(GATE_SERVO, SERVO_FREQ, GATE_CLOSED, RESOLUTION_10B_COMPARE_FORMAT);
-  delay(200);
+  delay(300);
 }
 
 void depositCans()
@@ -295,7 +309,7 @@ void funMode()
   display.println("In funMode");
   display.display();
   openGate();
-  delay(2000);
+  delay(4000);
   closeGate();
   depositCans();
   while (true)

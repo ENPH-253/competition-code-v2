@@ -10,7 +10,7 @@ public:
     void drive(int leftStop, int rightStop);
     void turnL(int leftStop, int rightStop);
     void turnR(int leftStop, int rightStop);
-    void backup(int leftStop, int rightStop);
+    void backup(int leftStop, int rightStop, int speedL, int speedR);
     void stop();
     void rightPivot();
     void rightPivotCount(int counts);
