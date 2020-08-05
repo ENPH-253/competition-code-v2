@@ -1,7 +1,6 @@
 #include <../src/consts/const.h>
 #include <../src/pinSetup/pinSetup.h>
 #include <../src/sonar_logic/sonar_logic.h>
-//#include "SensorArray.h"
 #include "Pid.h"
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
