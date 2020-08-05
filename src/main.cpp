@@ -106,8 +106,14 @@ void loop()
 
   if (distance < SONAR_LIMIT)
   {
-    if (sl.pollSonar() < SONAR_LIMIT_CLOSE)
+    if (distance < SONAR_LIMIT_CLOSE)
     {
+
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("C");
+      display.display();
+
       //small backwards movement
       encoders.adjustmentBackupCount(10);
       //open gate and small pivot
@@ -115,7 +121,7 @@ void loop()
       encoders.rightPivotCount(16);
 
       //drive straight and close
-      encoders.drive(20, 20);
+      encoders.drive(18, 18);
 
       closeGate();
       //deposit
@@ -123,11 +129,17 @@ void loop()
       depositCans();
       //pivot left
 
-      encoders.backup(24, 24, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      encoders.backup(15, 15, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
       pivot(LEFT, PIVOT_SPEED);
     }
-    else if (sl.pollSonar() < SONAR_LIMIT_MID)
+    else if (distance < SONAR_LIMIT_MID)
     {
+
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("MMMMMMMMMMM");
+      display.display();
+      
 
       //small backwards movement
       encoders.adjustmentBackupCount(10);
@@ -136,7 +148,7 @@ void loop()
       encoders.rightPivotCount(20);
 
       //drive straight and close
-      encoders.drive(43, 38);
+      encoders.drive(40, 35);
 
       closeGate();
 
@@ -144,12 +156,19 @@ void loop()
       depositCans();
 
       //pivot left
-      encoders.backup(43, 43, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      encoders.backup(35, 30, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
       pivot(LEFT, PIVOT_SPEED);
     }
 
-    else if (sl.pollSonar() < SONAR_LIMIT)
+    else if (distance < SONAR_LIMIT)
     {
+
+
+      display.clearDisplay();
+      display.setCursor(0,0);
+      display.println("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFf");
+      display.display();
+
       //small backwards movement
       encoders.adjustmentBackupCount(10);
       //open gate and small pivot
@@ -157,7 +176,7 @@ void loop()
       encoders.rightPivotCount(30);
 
       //drive straight and close
-      encoders.drive(62, 56);
+      encoders.drive(57, 51);
 
       closeGate();
 
@@ -165,13 +184,17 @@ void loop()
       depositCans();
 
       //pivot left
-      encoders.backup(62, 62, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
+      encoders.backup(50, 44, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
       pivot(LEFT, PIVOT_SPEED);
     }
   }
 
   if (millis() - start_time > FINAL_DUMP) {
     depositCans();
+    motorStop();
+    while(true) {
+
+    }
   }
 }
 
