@@ -46,7 +46,7 @@ void setup()
   // while (true) {
   // display.clearDisplay();
   // display.setCursor(0, 0);
-  // //   // display.println(encoders.countL);
+  // //   // display.println(encoders.countL); 
   // //   // display.println(encoders.countR);
   // int error = sensor_array.calculateError();
   //   display.println(sensor_array.LFSensor[0]);
@@ -148,7 +148,7 @@ void loop()
     encoders.adjustmentBackup();
     //open gate and small pivot
     openGate();
-    encoders.rightPivotCount(25);
+    encoders.rightPivotCount(24);
 
     //drive straight and close
     encoders.drive(60, 60, ENC_STRAIGHT_SPEED+10, ENC_STRAIGHT_SPEED);

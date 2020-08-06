@@ -47,7 +47,7 @@
 #define KD 10
 #define THRESHOLD 580
 
-#define BASE_SPEED 915
+#define BASE_SPEED 910
 
 #define MOTOR_FREQ 2000
 #define SERVO_FREQ 50
