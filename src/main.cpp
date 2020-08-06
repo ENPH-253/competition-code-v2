@@ -152,7 +152,7 @@ void loop()
       encoders.adjustmentBackupCount(10);
       //open gate and small pivot
       openGate();
-      encoders.rightPivotCount(22);
+      encoders.rightPivotCount(20);
 
       //drive straight and close
       encoders.drive(62, 62);
