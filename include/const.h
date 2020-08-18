@@ -13,11 +13,6 @@
 #define ECHO_PIN PB14
 #define TRIG_PIN PB15
 
-// #define MOTOR_R_F PB_9
-// #define MOTOR_R_B PB_8
-// #define MOTOR_L_F PA_2
-// #define MOTOR_L_B PA_3
-
 #define FUNSWITCH PB13
 #define PHOTOINTERRUPTER_R PA15
 #define PHOTOINTERRUPTER_L PA12
@@ -66,7 +61,7 @@
 #define STRAIGHT_LENGTH 10
 
 #define GATE_CLOSED 27.62
-#define GATE_OPEN 110 //85.76
+#define GATE_OPEN 110 
 #define SERVO_STEP 10
 
 #define PLATFORM_DOWN_R 126.76
@@ -76,12 +71,6 @@
 #define PLATFORM_DOWN_L 23.621
 
 #define PLATFORM_UP_L 126.76
-
-// #define PLATFORM_DOWN_R 180
-// #define PLATFORM_UP_R 90
-
-// #define PLATFORM_DOWN_L 0
-// #define PLATFORM_UP_L 90
 
 #define SONAR_LIMIT 55
 #define SONAR_LIMIT_MID 37
@@ -96,8 +85,3 @@
 
 #define MAX_TURNS 7
 #define FINAL_DUMP 57000
-
-// 126.76
-// 76.77
-// 23.621
-// 74

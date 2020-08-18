@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <../src/consts/const.h>
+#include "const.h"
 #include "Encoders.h"
 #define MOTOR_R_CW PA_2
 #define MOTOR_R_CCW PA_3
@@ -10,7 +10,6 @@
 #define PWMFREQ 2000
 #define FWD_SPEED 885
 #define BACK_SPEED 885
-// #define PIVOT_SPEED 950
 
 Encoders::Encoders(SensorArray sensor_arr)
 {
@@ -167,10 +166,6 @@ void Encoders::rightPivotCount(int counts)
 void Encoders::adjustmentBackup()
 {
   backup(14, 14, ENC_STRAIGHT_SPEED, ENC_STRAIGHT_SPEED);
-}
-void Encoders::rightPivotCount(int counts)
-{
-  turnR(0, counts);
 }
 
 void Encoders::adjustmentBackupCount(int counts)

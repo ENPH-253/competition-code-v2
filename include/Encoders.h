@@ -1,6 +1,5 @@
-  
 #include "SensorArray.h"
-#include <../src/consts/const.h>
+#include "const.h"
 
 class Encoders
 {

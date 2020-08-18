@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "SensorArray.h"
-#include <../src/consts/const.h>
+#include "const.h"
 
 SensorArray::SensorArray()
 {
@@ -36,7 +36,6 @@ int SensorArray::calculateError()
 
     if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 1))
         error = -4.5;
-    // error = -4;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 1) && (digitalArr[4] == 1))
         error = -4;
@@ -61,7 +60,6 @@ int SensorArray::calculateError()
 
     else if ((digitalArr[0] == 1) && (digitalArr[1] == 0) && (digitalArr[2] == 0) && (digitalArr[3] == 0) && (digitalArr[4] == 0))
         error = 4.5;
-    // error = 4;
 
     else if ((digitalArr[0] == 0) && (digitalArr[1] == 1) && (digitalArr[2] == 1) && (digitalArr[3] == 1) && (digitalArr[4] == 0))
         error = 0;
@@ -74,7 +72,3 @@ bool SensorArray::anyFrontSensorOn()
     this->calculateError();
     return (digitalArr[0] == 1 || digitalArr[1] == 1 || digitalArr[2] == 1 || digitalArr[3] == 1 || digitalArr[4] == 1);
 }
-
-// void SensorArray::calculateThresholds() {
-
-// }

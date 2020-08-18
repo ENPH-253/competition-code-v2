@@ -1,4 +1,4 @@
-#include <../src/pinSetup/pinSetup.h>
+#include "pinSetup.h"
 
 void pinSetup()
 {
@@ -28,17 +28,4 @@ void pinSetup()
     pinMode(PHOTOINTERRUPTER_L, INPUT_PULLUP);
 
     pinMode(FUNSWITCH,INPUT_PULLUP);
-}
-
-void displaySetup(Adafruit_SSD1306 display)
-{
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    display.display();
-
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);
-    display.clearDisplay();
-    Serial.begin(9600);
 }

@@ -1,7 +1,6 @@
-#include <../src/consts/const.h>
-#include <../src/pinSetup/pinSetup.h>
-#include <../src/sonar_logic/sonar_logic.h>
-//#include "SensorArray.h"
+#include "const.h"
+#include "pinSetup.h"
+#include "sonar_logic.h"
 #include "Pid.h"
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -12,7 +11,6 @@ void motorStop();
 void handle_R_interrupt();
 void handle_L_interrupt();
 void depositCans();
-void goGetCan(int pivot_count, int drive_count, int backup_count);
 void openGate();
 void closeGate();
 void funMode();
@@ -20,10 +18,8 @@ void funMode();
 Pid pid = Pid(KP, KD);
 SensorArray sensor_array = SensorArray();
 Encoders encoders = Encoders(sensor_array);
-Sonar_Logic sl = Sonar_Logic(&encoders);
-int pivot_count = 0;
+Sonar_Logic sl = Sonar_Logic();
 double start_time;
-double check_time;
 float distance;
 
 void setup()
@@ -41,25 +37,6 @@ void setup()
   pwm_start(RIGHT_SERVO, SERVO_FREQ, PLATFORM_DOWN_R, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(LEFT_SERVO, SERVO_FREQ, PLATFORM_DOWN_L, RESOLUTION_10B_COMPARE_FORMAT);
 
-  // check tcrt and encoders
-
-  // while (true) {
-  // display.clearDisplay();
-  // display.setCursor(0, 0);
-  // //   // display.println(encoders.countL);
-  // //   // display.println(encoders.countR);
-  // int error = sensor_array.calculateError();
-  //   display.println(sensor_array.LFSensor[0]);
-  //   display.println(sensor_array.LFSensor[1]);
-  //   display.println(sensor_array.LFSensor[2]);
-  //   display.println(sensor_array.LFSensor[3]);
-  //   display.println(sensor_array.LFSensor[4]);
-  //   display.println(sensor_array.digitalArr[5]);
-
-  //   display.display();
-
-  // }
-
   if (!digitalRead(FUNSWITCH))
   {
     funMode();
@@ -74,27 +51,8 @@ void setup()
 void loop()
 {
 
-  display.clearDisplay();
-  display.setCursor(0, 0);
-
   // follow tape
   int error = sensor_array.calculateError();
-
-  display.println(sensor_array.LFSensor[0]);
-  display.println(sensor_array.LFSensor[1]);
-  display.println(sensor_array.LFSensor[2]);
-  display.println(sensor_array.LFSensor[3]);
-  display.println(sensor_array.LFSensor[4]);
-
-  int error = sensor_array.calculateError();
-
-  display.println(error);
-  display.display();
-
-  // int g = map(analogRead(POT), 0, 1023, 0, 150);
-  // pid.Kp = g;
-  // display.println(pid.Kp);
-  // display.println(" ");
 
   // follow tape
   pid.calculatePID(error);
@@ -111,8 +69,6 @@ void loop()
   {
     if (distance < SONAR_LIMIT_CLOSE)
     {
-      display.println("CLOSE");
-      display.display();
       //small backwards movement
       encoders.adjustmentBackup();
       //open gate and small pivot
@@ -131,8 +87,6 @@ void loop()
     }
     else if (distance < SONAR_LIMIT_MID)
     {
-      display.println("MMMMMM");
-      display.display();
       //small backwards movement
       encoders.adjustmentBackup();
       //open gate and small pivot
@@ -152,8 +106,6 @@ void loop()
 
     else if (distance < SONAR_LIMIT)
     {
-      display.println("FFFFFFFFFFFFFFFFF");
-      display.display();
       //small backwards movement
       encoders.adjustmentBackup();
       //open gate and small pivot
@@ -185,7 +137,6 @@ void loop()
 void motorPIDcontrol(int speed)
 {
   int gain = pid.speed;
-  // int slow_down = pid.slow_down;
 
   if (gain > 0)
   {
@@ -216,10 +167,10 @@ void motorStop()
 
 void motorStraight()
 {
-  pwm_start(MOTOR_R_F, MOTOR_FREQ, 900, RESOLUTION_10B_COMPARE_FORMAT);
+  pwm_start(MOTOR_R_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_R_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
-
-  pwm_start(MOTOR_L_F, MOTOR_FREQ, 900, RESOLUTION_10B_COMPARE_FORMAT);
+ 
+  pwm_start(MOTOR_L_F, MOTOR_FREQ, BASE_SPEED, RESOLUTION_10B_COMPARE_FORMAT);
   pwm_start(MOTOR_L_B, MOTOR_FREQ, 0, RESOLUTION_10B_COMPARE_FORMAT);
 }
 
